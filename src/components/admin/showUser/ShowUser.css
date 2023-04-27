@@ -1,0 +1,10 @@
+.showUser{}
+
+.cardUser{
+    display: inline-block;
+    padding: 2vw;
+    margin: 2vw;
+    border: black solid 0.1vw;
+    background-color: rgba(119, 96, 159, 0.3);
+    
+}

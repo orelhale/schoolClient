@@ -1,0 +1,2 @@
+cd "<path>"
+npm start

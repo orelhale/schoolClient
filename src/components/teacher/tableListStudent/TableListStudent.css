@@ -1,0 +1,66 @@
+.TableListStudent{
+    font-size: 2vw;
+
+}
+
+.containerTableListStudent{
+    /* border: 0.1vw solid black; */
+}
+
+.table_TableListStudent{
+    /* margin: 3vw; */
+    border: 0.20vw solid blue;
+    border-collapse: collapse;
+    margin: 2vw;
+    
+}
+
+.td_TableListStudent, .th_TableListStudent{
+    border: 0.1vw solid black;
+    padding: 2vw;
+    display: inline-flex;   
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5vw;
+    padding: 1vw;
+    width: 12vw;
+    height:4vw;
+}
+
+.selectedData{
+    border: 0.12rem red solid;
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    /* font-size: 2rem; */
+    display:  flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.dataNotSelected{
+    /* border: 0.1vw rgb(128, 128, 128, 0.5) solid; */
+    border: 0.12rem black solid;
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    display:  flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.divSelectData{
+    height: 12rem;
+    width: 3rem;
+    position: relative;
+    display:  flex;
+    flex-direction: column-reverse;
+    justify-content: space-around;
+}
+
+
+

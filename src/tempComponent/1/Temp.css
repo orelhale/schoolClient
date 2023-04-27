@@ -1,0 +1,5 @@
+.Temp{
+    background-color: aliceblue;
+    display: inline-flex;
+    flex-direction: row;
+}

@@ -1,0 +1,34 @@
+.myStyleOfAlineItems1{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    align-items: center;
+}
+.myStyleOfAlineItems2{
+    display: flex;
+    justify-content: space-around;
+    width: 18rem;
+    align-items: center;
+}
+
+.wrapEditUser{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(255, 255, 255, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+
+
+.ontainerEditUser{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+}
