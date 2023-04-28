@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -11,112 +10,92 @@ import { useNavigate } from 'react-router-dom';
 import MyIcon_Edit from '../myIcons/MyIcon_Edit';
 import MyIcon_Delete from '../myIcons/MyIcon_Delete';
 import { display } from '@mui/system';
+import GenericTable from '../tables/GenericTable';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import WaitForServer from '../admin/WaitForServer';
 
 
 
 
-export default function TebleOf_ShowUser(props) {
+export default function TebleOf_ShowUser({ setUserToEdit }) {
 
-	const [rows, setRows] = React.useState([]);
+	const [dataRows, setDataRows] = useState(null);
 
-	let navigate = useNavigate()
-	React.useEffect(()=>{
-		if(props.dateFromServer){
-			console.log("props.dateFromServer = ", props.dateFromServer);
-			let arr = props.dateFromServer.map((item)=>{
-				let { name, level_permission, email, class_permission, _id } = item
-				let date = new Date(item.Date).toLocaleDateString();
-				class_permission = !class_permission[0] ? "---" : class_permission.map(item2=> ` ${item2} `)
-				return createData(name,  level_permission, email, date, class_permission, _id )
+	useEffect(() => {
+		axios.get("http://localhost:4000/admin/getAllUsers")
+			.then(data => {
+				let arr = data.data.map((item) => {
+					let { name, level_permission, email, class_permission, _id } = item
+					let date = new Date(item.Date).toLocaleDateString();
+					class_permission = !class_permission[0] ? "---" : class_permission.map(item2 => ` ${item2} `)
+					return { name, level_permission, email, date, class_permission, _id }
+				})
+				setDataRows(arr)
 			})
+			.catch((err) => {
+				console.log(err);
+			})
+	}, [])
 
-			setRows(arr)
-		}
-	},[props.dateFromServer])
 
-
+	const styleContainerTable = { maxWidth: "100%", overflow: 'hidden' };
+	const styleAllColumns = { fontWeight: 750 };
 	const columns = [
-		{ id: 'name', label: 'Name', minWidth: 170 },
-		{ id: 'Date', label: 'Date', minWidth: 100 },
+		{
+			id: 'name',
+			label: 'Name',
+			styleColumn: { minWidth: 140 },
+			styleRow: { minWidth: 140 }
+		},
+		{
+			id: 'date',
+			label: 'Date',
+			styleColumn: { minWidth: 140 },
+			styleRow: { minWidth: 140 }
+		},
 		{
 			id: 'level_permission',
-			label: 'Level permission',
-			minWidth: 170,
-			align: 'right',
-			format: (value) => value.toLocaleString('en-US'),
+			label: 'Role',
+			styleColumn: { minWidth: 140 },
+			styleRow: { minWidth: 140 }
 		},
 		{
 			id: 'email',
 			label: 'Email',
-			minWidth: 170,
-			align: 'right',
-			format: (value) => value.toLocaleString('en-US'),
+			styleColumn: { minWidth: 140 },
+			styleRow: { minWidth: 140 }
 		},
-		{
-			id: 'class_permission',
-			label: 'class_permission',
-			minWidth: 50,
-			align: 'right',
-			format: (value) => value.toFixed(2),
-		},
+		// {
+		// 	id: 'class_permission',
+		// 	label: 'class_permission',
+		// 	styleColumn: { minWidth: 50 },
+		// 	styleRow: { minWidth: 50 }
+		// },
 		{
 			id: '_id',
-			label: 'icon / id',
-			minWidth: 100,
-			align: 'right',
-			format: (value) => value.toFixed(2),
+			label: 'icon',
+			styleColumn: { minWidth: 10 },
+			styleRow: { minWidth: 10, padding: "16px 0px" }
 		},
 	]
-	
-	function createData(name, Date, level_permission, email,class_permission, _id) {
-		return { name, Date, level_permission, email, class_permission, _id };
-	}
 
-		
-	return (
-		<Paper sx={{ width: '100%', overflow: 'hidden' }}>
-			<TableContainer sx={{ maxHeight: 440 }}>
-			<Table stickyHeader aria-label="sticky table">
-				<TableHead>
-					<TableRow>
-					{columns.map((column) => (
-						<TableCell
-						sx={{fontWeight: 700}}
-							key={column.id}
-							align={column.align}
-							style={{ minWidth: column.minWidth }}
-						>
-							{column.label}
-						</TableCell>
-					))}
-					</TableRow>
-				</TableHead>
-				<TableBody>
-					{rows.map((row) => {
-						return (
-							<TableRow hover role="checkbox" tabIndex={-1} key={row.code} >
-							{columns.map((column) => {
-								const value = row[column.id];
-								return (
-									<TableCell key={column.id} align={column.align}>
-									{column.id == "_id" 
-										?  <span style={{display: "flex","justify-content": "space-around"}}> 
-												<MyIcon_Edit onClick={()=>{props.setUserToEdit(row); console.log("row = ",row)}}/> 
-												<MyIcon_Delete onClick={()=>{console.log("id = ",value)}} />
-											</span> 
-										: 	column.format && typeof value === 'number'
-										? 	column.format(value)
-										: 	value
-									}
-									</TableCell>
-								);
-							})}
-							</TableRow>
-						);
-					})}
-				</TableBody>
-			</Table>
-			</TableContainer>
-		</Paper>
+
+
+	return (<>
+		<GenericTable
+			columns={columns}
+			dataRows={dataRows}
+			styleContainerTable={styleContainerTable}
+			styleAllColumns={styleAllColumns}
+			icons={(row, value) => {
+				return <span style={{ display: "flex" }}>
+					<MyIcon_Edit onClick={() => { setUserToEdit(row); console.log("row = ", row) }} />
+					<span style={{ marginRight: "20px" }} />
+					<MyIcon_Delete onClick={() => { console.log("id = ", value) }} />
+				</span>
+			}}
+		/>
+	</>
 	);
 }
