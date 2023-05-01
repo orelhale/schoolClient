@@ -4,6 +4,7 @@ import Login from "../system/login/Login"
 import { useEffect } from 'react';
 import Register from './register/Register';
 import StyleFor_Login from '../style/StyleFor_Login';
+import TestPage from '../../tests/TestPage';
 
 
 function System() {
@@ -11,24 +12,25 @@ function System() {
 	let navigate = useNavigate()
 
 
-	useEffect(()=>{
-		if(location.pathname == "/"){
+	useEffect(() => {
+		if (location.pathname == "/") {
 			navigate('/login')
 		}
-	},[location.pathname])
+	}, [location.pathname])
 
-	
-  	return (
+
+	return (
 		<div className="System">
 			<Routes>
+				<Route path="/test/*" element={<><div><button onClick={()=>{navigate("login")}}>login</button></div><TestPage /></>} />
 				<Route path='login' element={<StyleFor_Login bodyOfBasicDesign={<Login />} />} />
 				<Route path='registration' element={<StyleFor_Login bodyOfBasicDesign={<Register />} />} />
 				<Route path='*' element={<h1>System *********</h1>} />
 			</Routes>
 		</div>
-  	);
+	);
 
-	
+
 }
 
 export default System;

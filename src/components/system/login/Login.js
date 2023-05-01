@@ -43,6 +43,7 @@ function PageLogin() {
                 <button onClick={() => mySubmit({ email: "shira@gmail.com", password: "1", nameOfSchool: "nameOfSchool" })}>teacher</button>
                 <button onClick={() => mySubmit({ email: "aliya@gmail.com", password: "1", nameOfSchool: "nameOfSchool" })}>not access</button>
                 <button onClick={() => mySubmit({ email: "aviya@gmail.com", password: "1", nameOfSchool: "nameOfSchool" })}>other</button>
+                <button onClick={() => { navigate("/test") }}>test</button>
             </div>
             <div className="container">
                 <div className="screen">

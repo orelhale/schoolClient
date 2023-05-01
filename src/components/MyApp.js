@@ -12,37 +12,37 @@ import * as React from 'react';
 function MyApp(props) {
 
 
-	
+
 
 	return (
 		<div className="MyApp">
 			{/* <div className="header">header</div> */}
-		
+
 			<div className="body">
-			{/* <div><Link to="/login">login</Link></div>
+				{/* <div><Link to="/login">login</Link></div>
 				<div><Link to="/teacher">teacher</Link></div>
 				<div><Link to="/admin">admin</Link></div>
 				<div><Link to="/secretary">secretary</Link></div>
 				<div><Link to="/unauthorized">unauthorized</Link></div>
 				 */}
-					<Routes>
+				<Routes>
 
-						<Route path="/*" element={<System />} />
-					
-						<Route path="teacher/*" element={<Teacher />}/>
+					<Route path="/*" element={<System />} />
 
-						<Route path="admin/*" element={<Admin />}/>
-						
-						<Route path="secretary/*" element={<Secretary />}/>
+					<Route path="teacher/*" element={<Teacher />} />
 
-						<Route path="unauthorized/*" element={<Unauthorized />}/>
+					<Route path="admin/*" element={<Admin />} />
 
-						{/* TODO check */}
-						{/* <Route path="/*" element={<h1>dddddddddddddd</h1>}/> */}
-						{/* TODO check */}
+					<Route path="secretary/*" element={<Secretary />} />
 
-					</Routes>
-	
+					<Route path="unauthorized/*" element={<Unauthorized />} />
+
+					{/* TODO check */}
+					{/* <Route path="/*" element={<h1>dddddddddddddd</h1>}/> */}
+					{/* TODO check */}
+
+				</Routes>
+
 			</div>
 
 			{/* <div className="footer">footer</div> */}
