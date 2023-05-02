@@ -84,15 +84,12 @@ export default function TebleOf_ListExams({ AllExams, setSpecificExam, setNotDat
 													<MyIcon_Edit onClick={() => { AllExams[index_row].examList[0] ? setSpecificExam(AllExams[index_row]) : setNotData("this exam is empty") }} />
 													<span style={{ marginRight: "0.5rem" }}></span>
 													<MyIcon_Delete onClick={() => {
-														
-														let tempData = [...AllExams]
-														tempData.splice(index_row,1,null)
-														setAllExams(tempData)
-														// apiFunction("users/deleteExam", "delete", { id: AllExams[index_row] })
-														// 	.then(() => {
-														// 		setSpecificExam()
-														// 	})
-	
+														apiFunction("users/deleteExam", "delete", { id: AllExams[index_row] })
+														.then(() => {
+															let tempData = [...AllExams]
+															tempData.splice(index_row,1)
+															console.log("tempData = ",tempData);
+															setAllExams(tempData)															})
 													}} />
 												</TableCell>
 											}

@@ -60,12 +60,11 @@ let ShowAllExams = (props)=>{
 	},[])
 
 
-
 	return (
 		<div className=" myFlexColumnAlineCenter">
 			{notData && <h1>{notData}</h1>}
 			<Style_ButtonAdd text={"Add exam"} onClick={()=>{props.setSpecificExam(null); navigate("/teacher/createExam")}}/>
-			{AllExams && 
+			{AllExams && AllExams[0] &&  
 				<>
 					<br></br>
 					<br></br>
