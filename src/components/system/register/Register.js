@@ -58,7 +58,7 @@ function PageRegister() {
                             </div>
                             <div className="login__field">
                                 <i className="login__icon fas fa-user"></i>
-                                <input required value={nameOfSchool} type={"text"} className="login__input" placeholder="Name of school / Email"/>
+                                <input required  onChange={(e) => { setNameOfSchool(e.target.value) }}  value={nameOfSchool} type={"text"} className="login__input" placeholder="School name"/>
                             </div>
                             
                             <button className="button login__submit">

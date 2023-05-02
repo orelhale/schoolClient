@@ -69,7 +69,7 @@ let ShowAllExams = (props)=>{
 				<>
 					<br></br>
 					<br></br>
-					<TebleOfListExams AllExams={AllExams} setSpecificExam={props.setSpecificExam} setNotData={setNotData} specificExam={specificExam}/>
+					<TebleOfListExams AllExams={AllExams} setSpecificExam={props.setSpecificExam} setNotData={setNotData} setAllExams={setAllExams}/>
 				</>
 			} 
 
