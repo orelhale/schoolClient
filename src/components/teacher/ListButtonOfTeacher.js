@@ -44,7 +44,7 @@ let ListButtonOfTeacher = (props)=> {
 
 	useEffect(()=>{
 		getListClassFromServer((data)=>{
-			console.log("data = ",data);
+			// console.log("data = ",data);
 			setListClasses(data);
 		})
 	},[])

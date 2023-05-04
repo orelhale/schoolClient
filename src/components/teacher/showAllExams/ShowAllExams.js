@@ -2,103 +2,77 @@ import { useEffect, useState, useContext } from "react"
 import "./ShowAllExams.css"
 
 import { UserContext } from "../../../App"
-import axios from "axios"
-import CreateExam from "../createExam/CreateExam"
 import { NameOfClassContext } from "../Teacher"
 import TebleOfListExams from "../../tables/TebleOf_ListExams"
 import { useNavigate } from "react-router-dom"
 
-
+import apiFunction from "../../../functions/apiFunction"
 import Style_ButtonAdd from "../../style/Style_ButtonAdd"
+import DataContext from "../../../context/DataContext"
+import { funcApi_GET2_Exams, funcApi_DELETE_Exams } from "../../../functions/apiFunctionExams"
 
-
-let ShowAllExams = (props)=>{
+let ShowAllExams = (props) => {
 	const useContext_NameOfClassContext = useContext(NameOfClassContext);
-	const ValueUseContext = useContext(UserContext);
+	const { setExamDate } = useContext(DataContext);
+	const { dataOfUser } = useContext(UserContext);
 
-	const [dataAboutUser, setdataAboutUser] = useState(ValueUseContext.dataOfUser)
 	const [nameOfThisClass, setNameOfThisClass] = useState(useContext_NameOfClassContext);
 
 	let [AllExams, setAllExams] = useState(null)
 	let [notData, setNotData] = useState(null)
-	let [specificExam, setSpecificExam] = useState(null)
 
 	let navigate = useNavigate()
 
 
-	useEffect(()=>{
-		 if(nameOfThisClass){
-			  props.setSpecificExam(null)
-		 }
-	},[])
+	let handleEditExam = (data) => {
+		setExamDate(data)
+		navigate("/teacher/editExam")
+	}
 
+	// פונקציית מחיקת מיבחן
+	let handleDeleteExam = (id, index_row) => {
+		console.log("id = ",id);
+		// שרת: מחיקת מבחן 
+		funcApi_DELETE_Exams({ id: id },() => {
+			let tempData = [...AllExams]
+			tempData.splice(index_row, 1)
+			setAllExams(tempData)
+		})
+	}
 
-
-	useEffect(()=>{
-		 if(dataAboutUser){
-
+	useEffect(() => {
+		if (dataOfUser) {
 			let dataToServer = {
-				teacherId: dataAboutUser.id,
+				teacherId: dataOfUser.id,
 				className: nameOfThisClass
 			}
 
-			// console.log("dataToServer = ",dataToServer);
-			axios.post("http://localhost:4000/users/getAllExamsFromOneTeacher", dataToServer)
-			.then(
-				(data)=>{
-					let dataFromServer = data.data
-
-					if(!dataFromServer[0]){
-						setNotData("You don't have any tests yet")
-					}else{
-						setAllExams(dataFromServer)
-					}
-				},
-				(err)=>{alert("err")}
+			// שרת: בקשת המבחנים של לפי מזהה מורה ומזהה כיתה
+			funcApi_GET2_Exams(
+				dataToServer,
+				(dataFromServer) => {
+					if (!dataFromServer[0])
+						return setNotData("You don't have any tests yet")
+					setAllExams(dataFromServer)
+				}
 			)
-		 }
-	},[])
+		}
+	}, [])
 
 
 	return (
-		<div className=" myFlexColumnAlineCenter">
+		<div className="myFlexColumnAlineCenter">
 			{notData && <h1>{notData}</h1>}
-			<Style_ButtonAdd text={"Add exam"} onClick={()=>{props.setSpecificExam(null); navigate("/teacher/createExam")}}/>
-			{AllExams && AllExams[0] &&  
+			<Style_ButtonAdd text={"Add exam"} onClick={() => navigate("/teacher/createExam")} />
+			{AllExams && AllExams[0] &&
 				<>
 					<br></br>
 					<br></br>
-					<TebleOfListExams AllExams={AllExams} setSpecificExam={props.setSpecificExam} setNotData={setNotData} setAllExams={setAllExams}/>
+					<TebleOfListExams AllExams={AllExams} handleEditExam={handleEditExam} setNotData={setNotData} handleDeleteExam={handleDeleteExam} />
 				</>
-			} 
-
-			{/* {specificExam && checkShow &&
-				<CreateExam specificExam={specificExam} setCheckShow={setCheckShow} />
-			} */}
+			}
 		</div>
 	)
 }
 
-
 export default ShowAllExams
-
-// let table = (
-// 	<table className="table_style_1">
-// 	<tr>
-// 		<th className="td_style_3">#</th>
-// 		<th className="th_style_2">Name</th>
-// 		<th className="th_style_2">Date</th>
-// 	</tr>
-// 	{AllExams.map((exam, i)=>{
-// 		return (
-// 			<tr onClick={()=>{
-// 				exam.examList[0] ? setSpecificExam(exam) : setNotData("this exam is empty");
-// 			}}>
-// 				<td className="td_style_3">{i + 1}.</td>
-// 				<td className="td_style_2">{exam.examName}</td>
-// 				<td className="td_style_2">{exam.date}</td>
-// 			</tr>
-// 		)
-// 	})}
-// 	</table> 
-// )

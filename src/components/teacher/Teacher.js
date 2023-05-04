@@ -10,6 +10,7 @@ import ListButtonOfTeacher from './ListButtonOfTeacher';
 import ShowAllExams from './showAllExams/ShowAllExams';
 import CreateExam from './createExam/CreateExam';
 import { Box, Paper } from '@mui/material';
+import EditExam from '../../pages/EditExam';
 
 export let NameOfClassContext = createContext()
  
@@ -31,11 +32,11 @@ function Teacher() {
    },[specificExam])
 
 
-	useEffect(()=>{
-		if (state_of_NameOfClassContext) {
-			console.log("state_of_NameOfClassContext = ",state_of_NameOfClassContext);
-		}
-   },[state_of_NameOfClassContext])
+	// useEffect(()=>{
+	// 	if (state_of_NameOfClassContext) {
+	// 		console.log("state_of_NameOfClassContext = ",state_of_NameOfClassContext);
+	// 	}
+   // },[state_of_NameOfClassContext])
 
 
 	async function funcCheckToken() {
@@ -43,11 +44,11 @@ function Teacher() {
 		if(!dataFromCheckToken){
 			navigate("/login")
 		}
-		console.log("dataFromCheckToken = ",dataFromCheckToken);
+		// console.log("dataFromCheckToken = ",dataFromCheckToken);
 		// console.log("dataFromCheckToken = ",dataFromCheckToken.class_permission[0]);
 		// setState_of_NameOfClassContext(dataFromCheckToken.class_permission[0]? dataFromCheckToken.class_permission[0] : "-")
 		setState_of_NameOfClassContext(dataFromCheckToken.class_permission[0]? dataFromCheckToken.class_permission[0] : "-")
-		console.log(dataFromCheckToken.class_permission[0]);
+		// console.log(dataFromCheckToken.class_permission[0]);
 		ValueUseContext.set(dataFromCheckToken)
 	}
 
@@ -58,8 +59,8 @@ function Teacher() {
 		// console.log(state_of_NameOfClassContext);
 		// console.log();
 		if(ValueUseContext.dataOfUser,state_of_NameOfClassContext){
-			console.log("Teacher: data About User = ",ValueUseContext.dataOfUser)
-			console.log("state_of_NameOfClassContext = ",state_of_NameOfClassContext)
+			// console.log("Teacher: data About User = ",ValueUseContext.dataOfUser)
+			// console.log("state_of_NameOfClassContext = ",state_of_NameOfClassContext)
 			setChecksIfShowComponent(true)
 		}
 	},[ValueUseContext,state_of_NameOfClassContext])
@@ -79,11 +80,11 @@ function Teacher() {
 	},[])
 
 
-   useEffect(()=>{
-      if(state_of_NameOfClassContext){
-         console.log("state_of_NameOfClassContext = ",state_of_NameOfClassContext);
-      }
-   },[state_of_NameOfClassContext])
+   // useEffect(()=>{
+   //    if(state_of_NameOfClassContext){
+   //       console.log("state_of_NameOfClassContext = ",state_of_NameOfClassContext);
+   //    }
+   // },[state_of_NameOfClassContext])
 
 
 
@@ -141,8 +142,9 @@ function Teacher() {
 								</div>
 							}></Route>
 							<Route path='tableListStudent' element={<TableListStudent />}></Route>
-							<Route path='showAllExams' element={<ShowAllExams setSpecificExam={setSpecificExam}/>}></Route>
+							<Route path='showAllExams' element={<ShowAllExams />}></Route>
                     	<Route path='createExam' element={<CreateExam  specificExam={specificExam}/>} ></Route>
+                    	<Route path='editExam' element={<EditExam />} ></Route>
 							<Route path='*' element={location.pathname != "/teacher" && <h1>Teacher *********</h1>} />
 						</Routes>
 					{/* </Paper> */}

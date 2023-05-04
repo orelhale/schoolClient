@@ -1,6 +1,5 @@
 
 
-import * as React from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -13,9 +12,10 @@ import { IconButton } from '@mui/material';
 import MyIcon_Delete from "../myIcons/MyIcon_Delete"
 import MyIcon_Edit from "../myIcons/MyIcon_Edit"
 import apiFunction from "../../functions/apiFunction"
+import { useEffect, useState } from 'react';
 
 
-export default function TebleOf_ListExams({ AllExams, setSpecificExam, setNotData, setAllExams }) {
+export default function TebleOf_ListExams({ AllExams, handleEditExam, setNotData, handleDeleteExam }) {
 
 	let defaultMinWidth = 50;
 	const columns = [
@@ -29,19 +29,18 @@ export default function TebleOf_ListExams({ AllExams, setSpecificExam, setNotDat
 	let style1 = { fontWeight: 700, "font-size": "1.4rem", "width": "15%" }
 	let style2 = { fontWeight: 700, "font-size": "1.4rem" }
 
-	const [rows, setRows] = React.useState([]);
+	const [rows, setRows] = useState([]);
 
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (AllExams) {
-			// console.log("AllExams = ",AllExams);
 			let arr = AllExams.map((item, i) => {
 				let { examName, date, average } = item
 				return { index: `${i + 1}.`, name: examName, date: date, average: average }
 			})
 			setRows(arr)
 		}
-	}, [])
+	}, [AllExams])
 
 
 	return (
@@ -67,12 +66,7 @@ export default function TebleOf_ListExams({ AllExams, setSpecificExam, setNotDat
 					<TableBody>
 						{rows.map((row, index_row) => {
 							return (
-								<TableRow
-									hover
-									role="checkbox"
-									tabIndex={-1} key={row.code}
-								// onClick={()=>{AllExams[index_row].examList[0] ? setSpecificExam(AllExams[index_row]) : setNotData("this exam is empty")}}
-								>
+								<TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
 									{columns.map((column, index_column) => {
 										const value = row[column.id];
 										return (<>
@@ -81,16 +75,9 @@ export default function TebleOf_ListExams({ AllExams, setSpecificExam, setNotDat
 											</TableCell>
 											{(index_column + 1 == columns.length) &&
 												<TableCell key={columns.length} sx={{ "font-size": "1.4rem", display: "flex" }}>
-													<MyIcon_Edit onClick={() => { AllExams[index_row].examList[0] ? setSpecificExam(AllExams[index_row]) : setNotData("this exam is empty") }} />
+													<MyIcon_Edit onClick={() => { AllExams[index_row].examList[0] ? handleEditExam(AllExams[index_row]) : setNotData("this exam is empty") }} />
 													<span style={{ marginRight: "0.5rem" }}></span>
-													<MyIcon_Delete onClick={() => {
-														apiFunction("users/deleteExam", "delete", { id: AllExams[index_row] })
-														.then(() => {
-															let tempData = [...AllExams]
-															tempData.splice(index_row,1)
-															console.log("tempData = ",tempData);
-															setAllExams(tempData)															})
-													}} />
+													<MyIcon_Delete onClick={() => { handleDeleteExam(AllExams[index_row]._id, index_row) }} />
 												</TableCell>
 											}
 										</>);
