@@ -5,10 +5,8 @@ import ListButtonOfTeacher from "../../components/teacher/ListButtonOfTeacher";
 export default function NavRouts() {
 	return (
 		<Routes>
-			<Route path="/">
-				<Route path="teacher" element={<ListButtonOfTeacher />} />
-				<Route path="admin" element={<ListButtonOfAdmin />} />
-			</Route>
+			<Route path="teacher/*" element={<ListButtonOfTeacher />} />
+			<Route path="admin/*" element={<ListButtonOfAdmin />} />
 		</Routes>
 	)
 }

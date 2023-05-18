@@ -21,9 +21,9 @@ import Avatar from '@mui/material/Avatar';
 import PersonIcon from '@mui/icons-material/Person';
 
 
-function ContainerMain(props) {
+function ContainerMain({ window, nameUser = "", listButtons, logOut, showListButtons = true, children }) {
 
-	const { window, drawerData, logOut } = props;
+	// const = props;
 	const [mobileOpen, setMobileOpen] = React.useState(false);
 	const [checkOpenListExams, setCheckOpenListExams] = React.useState(false);
 
@@ -36,7 +36,7 @@ function ContainerMain(props) {
 		console.log("openListOfExams");
 	};
 
-	const drawerWidth = drawerData ? 240 : 0;
+	const drawerWidth = showListButtons ? 240 : 0;
 
 
 	// 00000 משתנה שמחיק את התוכן של 2 המגרות
@@ -49,13 +49,12 @@ function ContainerMain(props) {
 						<PersonIcon />
 					</Avatar>
 				</ListItemIcon>
-				{drawerData && drawerData.nameUser}
+				{nameUser}
 			</Toolbar>
 
 
 			<Divider />
-			{drawerData && drawerData.ListButtons}
-
+			{listButtons}
 
 			<Divider />
 			<List>
@@ -97,8 +96,7 @@ function ContainerMain(props) {
 			{/* Box 2222222*/}
 			{/* תוכן הדף*/}
 			<Box component="main" sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
-				{props.ooo}
-				{props.body}
+				{children}
 			</Box>
 
 

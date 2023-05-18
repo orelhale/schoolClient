@@ -1,7 +1,5 @@
 
-import * as React from 'react';
-import { useEffect, useState } from 'react';
-
+import { useEffect, useState, useContext } from 'react';
 
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -21,33 +19,37 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
 import axios from 'axios';
+import DataContext from '../../context/DataContext';
 
 // ****** #1# s  ******
-let getListClassFromServer = async (functionToDo)=>{
+let getListClassFromServer = async (functionToDo) => {
 	return await axios.get("http://localhost:4000/admin/getListOf_ClassNameAndClassId")
-	.then(
-		(data)=>{ 
-			functionToDo(data.data)
-		},
-		(err)=>{console.log("err in function \"getListClassFromServer\" ");},
-	)
+		.then(
+			(data) => {
+				functionToDo(data.data)
+			},
+			(err) => { console.log("err in function \"getListClassFromServer\" "); },
+		)
 };
 
 
 
-let ListButtonOfTeacher = (props)=> {
-	
+let ListButtonOfTeacher = (props) => {
+	let { classId, setClassId, setUserData, userData } = useContext(DataContext)
+
+	let list = (userData && userData.class_permission) || []
+
 	const drawerWidth = 240;
 	const navigate = useNavigate()
 
 	let [listClasses, setListClasses] = useState();
 
-	useEffect(()=>{
-		getListClassFromServer((data)=>{
+	useEffect(() => {
+		getListClassFromServer((data) => {
 			// console.log("data = ",data);
 			setListClasses(data);
 		})
-	},[])
+	}, [])
 
 
 	// פונקצייה: מקבלת את כל נתוני הכיתות ומחזירה מערך שמכיל רק את השמות של הכיתות 
@@ -61,8 +63,8 @@ let ListButtonOfTeacher = (props)=> {
 	// 										 פרמטר שני: מער שמכיל רק את השמות של הכיתות
 	function getArrayWithOnlyClassId(list, listNameOfClasses) {
 		let listId = [];
-		list.map(item =>{
-			if(listNameOfClasses.includes(item.nameOfClass))
+		list.map(item => {
+			if (listNameOfClasses.includes(item.nameOfClass))
 				listId.push(String(item._id));
 		})
 		return listId
@@ -70,52 +72,55 @@ let ListButtonOfTeacher = (props)=> {
 
 
 	function getNameClassByClassId(list, id) {
-		let nameOfClass = list.find(item =>item._id == id);
+		let nameOfClass = list.find(item => item._id == id);
 		return nameOfClass ? nameOfClass.nameOfClass : "-";
 	}
 
 
 	return (
-		<List sx={{mb:drawerWidth /14+ "px",mt:drawerWidth /14+ "px"}}>
+		<List sx={{ mb: drawerWidth / 14 + "px", mt: drawerWidth / 14 + "px" }}>
 			{listClasses && <>
-				<Toolbar sx={{ display: 'inline-flex',width:"90%" , justifyContent:'center'}}>
-				<FormControl fullWidth>
-					<InputLabel variant="standard" htmlFor="uncontrolled-native" style={{color: "#1976d2"}}>
-						Classes list 
-					</InputLabel >
-					<NativeSelect 
-					onChange={(e)=>{props.setNameClass(e.target.value); navigate("/teacher")}}
-					defaultValue={props.list[0]}
-					>
-						{props.list.map((item,i)=>{
-							// ****** #1# d  ******
-							// return <option key={i} color='primary' value={item}>{item}</option>
-							return <option key={i} color='primary' value={item}>{getNameClassByClassId(listClasses,item)}</option>
-						})}
-					</NativeSelect>
-				</FormControl>
+				<Toolbar sx={{ display: 'inline-flex', width: "90%", justifyContent: 'center' }}>
+					<FormControl fullWidth>
+						<InputLabel variant="standard" htmlFor="uncontrolled-native" style={{ color: "#1976d2" }}>
+							Classes list
+						</InputLabel >
+						<NativeSelect
+							onChange={(e) => {
+								setClassId(e.target.value);
+								navigate("/teacher")
+							}}
+							defaultValue={list[0]}
+						>
+							{list.map((item, i) => {
+								// ****** #1# d  ******
+								// return <option key={i} color='primary' value={item}>{item}</option>
+								return <option key={i} color='primary' value={item}>{getNameClassByClassId(listClasses, item)}</option>
+							})}
+						</NativeSelect>
+					</FormControl>
 				</Toolbar>
 
 
-				<ListItem key={"list"} disablePadding onClick={()=>{navigate("tableListStudent")}}>
-				<ListItemButton>
-					<ListItemIcon>
-						<RuleOutlinedIcon color='primary' /> 
-					</ListItemIcon>
-					<ListItemText primary={"list"} />
-				</ListItemButton>
+				<ListItem key={"list"} disablePadding onClick={() => { navigate("tableListStudent") }}>
+					<ListItemButton>
+						<ListItemIcon>
+							<RuleOutlinedIcon color='primary' />
+						</ListItemIcon>
+						<ListItemText primary={"list"} />
+					</ListItemButton>
 				</ListItem>
 
 
-				<ListItem key={"exams"} disablePadding onClick={()=>{navigate("showAllExams")}}>
-				<ListItemButton>
-					<ListItemIcon>
-					<WysiwygIcon color='primary'/>
-					</ListItemIcon>
-					<ListItemText primary={"exams"} />
-				</ListItemButton>
+				<ListItem key={"exams"} disablePadding onClick={() => { navigate("showAllExams") }}>
+					<ListItemButton>
+						<ListItemIcon>
+							<WysiwygIcon color='primary' />
+						</ListItemIcon>
+						<ListItemText primary={"exams"} />
+					</ListItemButton>
 				</ListItem>
-			 </>}
+			</>}
 		</List>
 	);
 }
@@ -130,7 +135,7 @@ export default ListButtonOfTeacher
 // 	  <ListItem sx={{backgroundColor:"gainsboro"}} disablePadding  onClick={()=>{navigate("createExam")}}>
 // 	  <ListItemButton>
 // 		  <ListItemIcon>
-// 			  <RuleOutlinedIcon color='primary' /> 
+// 			  <RuleOutlinedIcon color='primary' />
 // 		  </ListItemIcon>
 // 		  <ListItemText primary={"create exam"} />
 // 	  </ListItemButton>
@@ -149,7 +154,7 @@ export default ListButtonOfTeacher
 
 
 
-// const [checkOpenListExams, setCheckOpenListExams] = React.useState(false);
+// const [checkOpenListExams, setCheckOpenListExams] = useState(false);
 // const openListOfExams = () => {
 // 	setCheckOpenListExams(checkOpenListExams ? false: true)
 // 	console.log("openListOfExams");

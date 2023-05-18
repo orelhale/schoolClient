@@ -10,7 +10,7 @@ import { Box } from "@mui/system";
 import WaitForServer from "../WaitForServer";
 import { Diversity1 } from "@mui/icons-material";
 
-function ShowUser(props) {
+function ShowUser() {
 	let [userToEdit, setUserToEdit] = useState(null);
 	let [dateFromServer, setDateFromServer] = useState(null);
 	let navigate = useNavigate();
