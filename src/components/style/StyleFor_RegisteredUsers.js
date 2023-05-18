@@ -36,27 +36,16 @@ function StyleFor_RegisteredUsers({ window, nameUser, listButtons, logOut, body 
 		console.log("openListOfExams");
 	};
 
-
-
 	// 00000 משתנה שמחיק את התוכן של 2 המגרות
 	const drawer = (
-		<div>
+		<>
 			{/* החלק הכי עליון של המגרה */}
-			<Toolbar>
-				<ListItemIcon>
-					<Avatar>
-						<PersonIcon />
-					</Avatar>
-				</ListItemIcon>
-				{nameUser}
-			</Toolbar>
+			<Toolbar><ListItemIcon><Avatar>
+				<PersonIcon />
+			</Avatar></ListItemIcon>{nameUser}</Toolbar>
 
+			<Divider />{listButtons}<Divider />
 
-			<Divider />
-			{listButtons}
-
-
-			<Divider />
 			<List>
 				{['log out'].map((text, index) => (
 					<ListItem key={text} disablePadding >
@@ -69,13 +58,12 @@ function StyleFor_RegisteredUsers({ window, nameUser, listButtons, logOut, body 
 					</ListItem>
 				))}
 			</List>
-
-		</div>
+		</>
 	);
 
 
-
 	const container = window !== undefined ? () => window().document.body : undefined;
+
 
 	return (
 		<Box >

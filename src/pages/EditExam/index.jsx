@@ -12,7 +12,6 @@ import apiFunction from '../../functions/apiFunction';
 
 
 
-
 export default function EditExam() {
    let { classId, examDate, setExamDate, userData } = useContext(DataContext)
    let [listStudents, setListStudents] = useState(null)
@@ -38,9 +37,6 @@ export default function EditExam() {
 
    useEffect(() => {
       if (nameOfThisClass && examDate) {
-
-         console.log("examDate = ", examDate);
-         console.log("nameOfThisClass = ", nameOfThisClass);
 
          setValueOfDate(editDate(examDate.date))
          let dataOfClass = examDate.examList
@@ -83,7 +79,6 @@ export default function EditExam() {
 
       console.log("data to server = ", obj);
       apiFunction(`exams`, "PUT", obj, (data) => {
-         console.log("data from server = ", data);
          setExamDate(null)
          navigate("../showAllExams")
       },
@@ -118,14 +113,11 @@ export default function EditExam() {
                      apiFunction("exams", "DELETE", { id: examDate._id })
                         .then(
                            (data) => {
-                              console.log(data.data)
                               navigate("../showAllExams")
                            },
                            (err) => { console.log("err in deleteExam = ", err) }
                         )
                   }}><DeleteIcon color="error" /></IconButton>
-
-
 
                   <TebleOf_CreateExam TableContent={{ listStudents: listStudents, scoreList: scoreList }} setScoreList={setScoreList} />
                   <div><button hidden ref={myRef} type="submit">Completed</button></div>

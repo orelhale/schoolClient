@@ -1,4 +1,3 @@
-import * as React from 'react';
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -19,13 +18,14 @@ import RuleOutlinedIcon from '@mui/icons-material/RuleOutlined';
 
 import Avatar from '@mui/material/Avatar';
 import PersonIcon from '@mui/icons-material/Person';
+import { useState } from 'react';
 
 
 function ContainerMain({ window, nameUser = "", listButtons, logOut, showListButtons = true, children }) {
 
 	// const = props;
-	const [mobileOpen, setMobileOpen] = React.useState(false);
-	const [checkOpenListExams, setCheckOpenListExams] = React.useState(false);
+	const [mobileOpen, setMobileOpen] = useState(false);
+	const [checkOpenListExams, setCheckOpenListExams] = useState(false);
 
 	const handleDrawerToggle = () => {
 		setMobileOpen(!mobileOpen);
@@ -41,22 +41,14 @@ function ContainerMain({ window, nameUser = "", listButtons, logOut, showListBut
 
 	// 00000 משתנה שמחיק את התוכן של 2 המגרות
 	const drawer = (
-		<div>
+		<>
 			{/* החלק הכי עליון של המגרה */}
-			<Toolbar>
-				<ListItemIcon>
-					<Avatar>
-						<PersonIcon />
-					</Avatar>
-				</ListItemIcon>
-				{nameUser}
-			</Toolbar>
+			<Toolbar><ListItemIcon><Avatar>
+				<PersonIcon />
+			</Avatar></ListItemIcon>{nameUser}</Toolbar>
 
+			<Divider />{listButtons}<Divider />
 
-			<Divider />
-			{listButtons}
-
-			<Divider />
 			<List>
 				{['log out'].map((text, index) => (
 					<ListItem key={text} disablePadding >
@@ -69,11 +61,8 @@ function ContainerMain({ window, nameUser = "", listButtons, logOut, showListBut
 					</ListItem>
 				))}
 			</List>
-
-		</div>
+		</>
 	);
-
-
 
 	const container = window !== undefined ? () => window().document.body : undefined;
 
