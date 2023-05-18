@@ -1,22 +1,19 @@
 import { useEffect, useState, useContext } from "react"
 import "./ShowAllExams.css"
 
-import { UserContext } from "../../../App"
-import { NameOfClassContext } from "../Teacher"
 import TebleOfListExams from "../../tables/TebleOf_ListExams"
 import { useNavigate } from "react-router-dom"
-
-import apiFunction from "../../../functions/apiFunction"
 import Style_ButtonAdd from "../../style/Style_ButtonAdd"
 import DataContext from "../../../context/DataContext"
 import { funcApi_GET2_Exams, funcApi_DELETE_Exams } from "../../../functions/apiFunctionExams"
 
-let ShowAllExams = (props) => {
-	const useContext_NameOfClassContext = useContext(NameOfClassContext);
-	const { setExamDate } = useContext(DataContext);
-	const { dataOfUser } = useContext(UserContext);
 
-	const [nameOfThisClass, setNameOfThisClass] = useState(useContext_NameOfClassContext);
+function ShowAllExams() {
+
+	let { setExamDate, classId, userData } = useContext(DataContext)
+
+
+	const [nameOfThisClass, setNameOfThisClass] = useState(classId);
 
 	let [AllExams, setAllExams] = useState(null)
 	let [notData, setNotData] = useState(null)
@@ -28,12 +25,11 @@ let ShowAllExams = (props) => {
 		setExamDate(data)
 		navigate("/teacher/editExam")
 	}
-
 	// פונקציית מחיקת מיבחן
 	let handleDeleteExam = (id, index_row) => {
-		console.log("id = ",id);
+		console.log("id = ", id);
 		// שרת: מחיקת מבחן 
-		funcApi_DELETE_Exams({ id: id },() => {
+		funcApi_DELETE_Exams({ id: id }, () => {
 			let tempData = [...AllExams]
 			tempData.splice(index_row, 1)
 			setAllExams(tempData)
@@ -41,9 +37,9 @@ let ShowAllExams = (props) => {
 	}
 
 	useEffect(() => {
-		if (dataOfUser) {
+		if (userData) {
 			let dataToServer = {
-				teacherId: dataOfUser.id,
+				teacherId: userData.id,
 				className: nameOfThisClass
 			}
 

@@ -5,8 +5,7 @@ import TestPage from "../../tests/TestPage.js";
 function TestRoutes() {
    return (
       <Routes>
-         <Route path="/test" element={<TestPage />}>
-         </Route>
+         <Route path="/test" element={<TestPage />} />
       </Routes>
    )
 }

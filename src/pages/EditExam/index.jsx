@@ -4,27 +4,22 @@ import { useNavigate } from "react-router-dom";
 import { Button, TextField } from "@mui/material"
 import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { NameOfClassContext } from "../../components/teacher/Teacher";
 import DataContext from "../../context/DataContext";
 import TebleOf_CreateExam from "../../components/tables/TebleOf_CreateExam";
 import SmallContainer from "../../components/SmallContainer";
 import Style_BackButton from "../../components/style/Style_BackButton";
-import { UserContext } from '../../App';
 import apiFunction from '../../functions/apiFunction';
 
 
 
 
 export default function EditExam() {
-   let useContext_NameOfClassContext = useContext(NameOfClassContext);
-   let { examDate, setExamDate } = useContext(DataContext)
-
-   let ValueUseContext = useContext(UserContext);
+   let { classId, examDate, setExamDate, userData } = useContext(DataContext)
    let [listStudents, setListStudents] = useState(null)
    let [nameOfExsam, setNameOfExsam] = useState("")
    let [scoreList, setScoreList] = useState(null)
    let [valueOfDate, setValueOfDate] = useState();
-   let [nameOfThisClass, setNameOfThisClass] = useState(useContext_NameOfClassContext);
+   let [nameOfThisClass, setNameOfThisClass] = useState(classId);
    let myRef = useRef();
    let navigate = useNavigate()
 
@@ -36,13 +31,14 @@ export default function EditExam() {
    }
 
    useEffect(() => {
-      if(!examDate || !nameOfThisClass){
+      if (!examDate || !nameOfThisClass) {
          navigate("../showAllExams")
       }
    })
 
    useEffect(() => {
       if (nameOfThisClass && examDate) {
+
          console.log("examDate = ", examDate);
          console.log("nameOfThisClass = ", nameOfThisClass);
 
@@ -76,7 +72,7 @@ export default function EditExam() {
 
 
       let obj = {
-         teacherId: ValueUseContext.dataOfUser.id,
+         teacherId: userData.id,
          className: nameOfThisClass,
          examName: nameOfExsam,
          date: new Date(valueOfDate).toLocaleDateString(),
@@ -99,7 +95,7 @@ export default function EditExam() {
 
    return (
       <div className="CreateExam font_CreateExam">
-            <div style={{ width: "90%" }}><Style_BackButton text={"Back to Exam list"} onClick={() => { navigate("../showAllExams") }} /></div>
+         <div style={{ width: "90%" }}><Style_BackButton text={"Back to Exam list"} onClick={() => { navigate("../showAllExams") }} /></div>
 
          {scoreList &&
             <SmallContainer>
@@ -117,18 +113,18 @@ export default function EditExam() {
                   </div>
                   <br></br>
 
-                     <IconButton onClick={() => {
-                        console.log("examDate._id = ", examDate._id);
-                        apiFunction("exams", "DELETE", { id: examDate._id })
-                           .then(
-                              (data) => {
-                                 console.log(data.data)
-                                 navigate("../showAllExams")
-                              },
-                              (err) => { console.log("err in deleteExam = ", err) }
-                           )
-                     }}><DeleteIcon color="error" /></IconButton>
-                  
+                  <IconButton onClick={() => {
+                     console.log("examDate._id = ", examDate._id);
+                     apiFunction("exams", "DELETE", { id: examDate._id })
+                        .then(
+                           (data) => {
+                              console.log(data.data)
+                              navigate("../showAllExams")
+                           },
+                           (err) => { console.log("err in deleteExam = ", err) }
+                        )
+                  }}><DeleteIcon color="error" /></IconButton>
+
 
 
                   <TebleOf_CreateExam TableContent={{ listStudents: listStudents, scoreList: scoreList }} setScoreList={setScoreList} />

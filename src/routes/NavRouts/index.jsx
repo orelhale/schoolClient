@@ -1,12 +1,13 @@
 import { Route, Routes } from "react-router-dom";
-import Home from "../../pages/Home";
-
+import ListButtonOfAdmin from "../../components/admin/ListButtonOfAdmin";
+import ListButtonOfTeacher from "../../components/teacher/ListButtonOfTeacher";
 
 export default function NavRouts() {
 	return (
 		<Routes>
 			<Route path="/">
-				<Route index element={<Home />} />
+				<Route path="teacher" element={<ListButtonOfTeacher />} />
+				<Route path="admin" element={<ListButtonOfAdmin />} />
 			</Route>
 		</Routes>
 	)

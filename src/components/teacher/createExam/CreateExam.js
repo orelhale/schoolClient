@@ -1,29 +1,25 @@
 import "./CreateExam.css"
 import axios from "axios";
 import { useContext, useEffect, useRef, useState } from 'react';
-import { UserContext } from "../../../App"
-import { NameOfClassContext } from "../Teacher"
 import { useNavigate } from "react-router-dom";
 import TebleOf_CreateExam from "../../tables/TebleOf_CreateExam";
 import Style_BackButton from "../../style/Style_BackButton";
 import { Button, TextField } from "@mui/material"
-import { IconButton } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
 import apiFunction from "../../../functions/apiFunction";
 import SmallContainer from "../../SmallContainer";
+import DataContext from "../../../context/DataContext";
 
 
 
-let CreateExam = (props) => {
-    const useContext_NameOfClassContext = useContext(NameOfClassContext);
+export default function CreateExam() {
 
+    let { classId, userData } = useContext(DataContext)
 
-    let ValueUseContext = useContext(UserContext);
     let [listStudents, setListStudents] = useState(null)
     let [nameOfExsam, setNameOfExsam] = useState("")
     let [scoreList, setScoreList] = useState(null)
     let [valueOfDate, setValueOfDate] = useState();
-    let [nameOfThisClass, setNameOfThisClass] = useState(useContext_NameOfClassContext);
+    let [nameOfThisClass, setNameOfThisClass] = useState(classId);
     let myRef = useRef();
     let navigate = useNavigate()
 
@@ -39,8 +35,6 @@ let CreateExam = (props) => {
             .then((data) => {
                 let dataFromServer = data.data
                 console.log('nameOfThisClass || editspecificExam');
-                let tampDate = editDate()
-                let tampDate2 = new Date(tampDate)
                 setValueOfDate(editDate())
 
                 let arr = []
@@ -67,7 +61,7 @@ let CreateExam = (props) => {
 
         let reversValueOfDate = valueOfDate.split("").reverse().join("")
         let obj = {
-            teacherId: ValueUseContext.dataOfUser.id,
+            teacherId: userData.id,
             className: nameOfThisClass,
             examName: nameOfExsam,
             date: new Date(valueOfDate).toLocaleDateString(),
@@ -120,4 +114,3 @@ let CreateExam = (props) => {
     )
 }
 
-export default CreateExam

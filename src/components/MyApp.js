@@ -7,6 +7,7 @@ import Secretary from './secretary/Secretary';
 import System from './system/System';
 import Unauthorized from './system/Unauthorized';
 import * as React from 'react';
+import TestPage from '../tests/TestPage';
 
 
 function MyApp(props) {
@@ -36,6 +37,7 @@ function MyApp(props) {
 					<Route path="secretary/*" element={<Secretary />} />
 
 					<Route path="unauthorized/*" element={<Unauthorized />} />
+					<Route path="test/*" element={<TestPage />} />
 
 					{/* TODO check */}
 					{/* <Route path="/*" element={<h1>dddddddddddddd</h1>}/> */}
