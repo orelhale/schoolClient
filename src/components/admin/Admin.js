@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from 'react';
 import { checkToken } from "../functionManager"
 import ShowUser from './showUser/ShowUser';
 import DataOfTheClasses from './DataOfTheClasses';
+import ProfessionList from './ProfessionList';
 import DataContext from '../../context/DataContext';
 
 
@@ -41,6 +42,7 @@ function Admin() {
 				<Routes>
 					<Route path='allUser' element={<ShowUser />} />
 					<Route path='dataOfTheClasses/*' element={<DataOfTheClasses />} />
+					<Route path='professionList/*' element={<ProfessionList />} />
 					<Route path='*' element={location.pathname != "/admin" && <h1>Admin *********</h1>} />
 				</Routes>
 			</div>

@@ -5,11 +5,11 @@ import { Box } from "@mui/system";
 
 
 // אייקון עפרון
-let MyIcon_Edit = (props)=>{
-    return(
+let MyIcon_Edit = ({ onClick }) => {
+    return (
 
-        <Avatar sx={{height: "2rem", width: "2rem", backgroundColor: "#912eff",color:"#fff"}}>
-            <EditIcon onClick={props.onClick}/>
+        <Avatar sx={{ height: "2rem", width: "2rem", backgroundColor: "#912eff", color: "#fff" }}>
+            <EditIcon onClick={onClick} />
         </Avatar>
     )
 }

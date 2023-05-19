@@ -96,6 +96,5 @@ export default function TebleOf_ShowUser({ setUserToEdit }) {
 				</span>
 			}}
 		/>
-	</>
-	);
+	</>);
 }

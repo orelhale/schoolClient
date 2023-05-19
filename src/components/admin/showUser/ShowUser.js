@@ -19,15 +19,14 @@ function ShowUser() {
 	let [dateFromServer, setDateFromServer] = useState(null);
 
 	useEffect(() => {
-		axios.get("http://localhost:4000/admin/getAllUsers").then(
-			(data) => {
-				setDateFromServer(data.data)
-			},
-			(err) => {
+		axios.get("http://localhost:4000/admin/getAllUsers")
+			.then(
+				(data) => {
+					setDateFromServer(data.data)
+				})
+			.catch((err) => {
 				console.log("Error: = ", err);
-			}
-		);
-
+			})
 	}, []);
 
 

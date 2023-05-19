@@ -29,7 +29,7 @@ function GenericTable({ columns, dataRows, styleAllColumns, icons, styleContaine
                   <TableHead>
                      <TableRow>
                         {columns.map((column) => {
-                           return <TableCell key={column.id} sx={column.styleColumn ? { ...column.styleColumn, ...styleAllColumns } : styleAllColumns}>{column.label}</TableCell>
+                           return <TableCell key={column.id} sx={column.styleColumn ? { ...column.styleColumn, ...styleAllColumns } : styleAllColumns}>{column.label != "icon" && column.label}</TableCell>
                         })}
                      </TableRow>
                   </TableHead>
@@ -42,7 +42,7 @@ function GenericTable({ columns, dataRows, styleAllColumns, icons, styleContaine
                                     const value = row[column.id];
                                     return (
                                        <TableCell key={column.id} sx={column.styleRow ? { ...column.styleRow, ...styleAllRows } : styleAllRows}>
-                                          {column.label == "icon" && icons ? icons(row, value) : value}
+                                          {column.label == "icon" && icons ? icons(row, value, index_row) : value}
                                        </TableCell>
                                     );
                                  })}

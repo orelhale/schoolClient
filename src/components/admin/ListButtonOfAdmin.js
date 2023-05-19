@@ -10,6 +10,7 @@ import BallotOutlinedIcon from '@mui/icons-material/BallotOutlined';
 import BallotRoundedIcon from '@mui/icons-material/BallotRounded';
 import AssignmentRoundedIcon from '@mui/icons-material/AssignmentRounded';
 import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
+import BadgeOutlinedIcon from '@mui/icons-material/BadgeOutlined';
 
 
 export default function ListButtonOfAdmin(){
@@ -33,6 +34,16 @@ export default function ListButtonOfAdmin(){
                     <AssignmentOutlinedIcon color={"primary"} />
                 </ListItemIcon>
             <ListItemText primary={"Data  of the classes"}/>
+            </ListItemButton>
+            </ListItem>
+
+
+            <ListItem disablePadding>
+            <ListItemButton onClick={()=>{navigate("professionList")}}>
+                <ListItemIcon>
+                    <BadgeOutlinedIcon color={"primary"} />
+                </ListItemIcon>
+            <ListItemText primary={"Profession list"}/>
             </ListItemButton>
             </ListItem>
         <br></br>
