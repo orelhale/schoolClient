@@ -4,6 +4,7 @@ import axios from "axios";
 import Component_MultiSelect from "../../Component_MultiSelect";
 import Style_BasicButton from "../../style/Style_BasicButton";
 import DataContext from "../../../context/DataContext";
+import apiFunction from "../../../functions/apiFunction";
 
 function EditUser(props) {
 	// שומר את כל הנתונים של המשתמש
@@ -28,28 +29,31 @@ function EditUser(props) {
 			setNewLevelPermission(userEdit.level_permission);
 			console.log("dataToEditUser = ", userEdit);
 
-			axios
-				.get("http://localhost:4000/admin/getListOf_ClassNameAndClassId")
-				// אם יהיה בעיות להחזיר
-				// .get("http://localhost:4000/admin/getListOfAllTheClasses")
+			// axios
+			// .get("http://localhost:4000/admin/getListOf_ClassNameAndClassId")
+			// אם יהיה בעיות להחזיר
+			// .get("http://localhost:4000/admin/getListOfAllTheClasses")
+			apiFunction("admin/getListOf_ClassNameAndClassId", "GET")
 				.then((listClass) => {
-
+					// .then((listClass) => {
 					// אם יהיה בעיות להחזיר
-					// let arrAllOptions = listClass.data.map((c) => {
+					// let arrAllOptions = listClass.map((c) => {
 					// 	return { label: c, value: c+"d" };
 					// });
 
-					let arrAllOptions = listClass.data.map((c) => {
+					let arrAllOptions = listClass.map((c) => {
+						console.log("c = ", c);
 						return { label: c.nameOfClass, value: c._id };
 					});
 					setOptionsMultiSelect(arrAllOptions);
 
 					let arrAllOptionsThatSelected = [];
+
 					if (typeof userEdit.class_permission == "object") {
 						userEdit.class_permission.forEach((nameOfClass) => {
 							nameOfClass = nameOfClass.replaceAll(" ", "");
 
-							if (listClass.data.includes(nameOfClass) == true) {
+							if (listClass.includes(nameOfClass) == true) {
 								arrAllOptionsThatSelected.push({
 									label: nameOfClass,
 									value: nameOfClass,
@@ -57,7 +61,6 @@ function EditUser(props) {
 							}
 						});
 					}
-
 					setSelected((eee) => {
 						return [...arrAllOptionsThatSelected, ...eee];
 					});
@@ -66,7 +69,6 @@ function EditUser(props) {
 	}, [userEdit]);
 
 	function update() {
-		console.log("userEdit = ", userEdit);
 		let newListClass = [];
 		if (newLevelPermission == "teacher") {
 			newListClass = selected.map((e) => e.value);
@@ -78,20 +80,20 @@ function EditUser(props) {
 			class_permission: newListClass,
 			level_permission: newLevelPermission,
 		};
-		console.log("data of userEdit = ", data);
 		userEdit.class_permission = newListClass;
 		userEdit.level_permission = newLevelPermission;
 
+		// axios.put("http://localhost:4000/admin/editUser", data)
 
-		axios.put("http://localhost:4000/admin/editUser", data).then((dddd) => {
-			console.log("dddd = ", dddd);
-			props.setDateFromServer((e) => {
-				let arr = [...e]
-				arr.splice(arr.findIndex(e => e.email == userEdit.email), 1, userEdit)
-				return arr
-			})
-			setUserEdit(null);
-		});
+		apiFunction("admin/editUser", "PUT", data)
+			.then((dataFromServer) => {
+				props.setDateFromServer((e) => {
+					let arr = [...e]
+					arr.splice(arr.findIndex(e => e.email == userEdit.email), 1, userEdit)
+					return arr
+				})
+				setUserEdit(null);
+			});
 	}
 
 
