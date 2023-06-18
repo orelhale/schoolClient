@@ -46,6 +46,16 @@ export default function ListButtonOfAdmin(){
             <ListItemText primary={"Profession list"}/>
             </ListItemButton>
             </ListItem>
+
+
+            <ListItem disablePadding>
+            <ListItemButton onClick={()=>{navigate("listEducationalPrograms")}}>
+                <ListItemIcon>
+                    <BadgeOutlinedIcon color={"primary"} />
+                </ListItemIcon>
+            <ListItemText primary={"List educational programs"}/>
+            </ListItemButton>
+            </ListItem>
         <br></br>
 
             {/* <ListItem>

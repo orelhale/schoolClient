@@ -7,6 +7,7 @@ import ShowUser from './showUser/ShowUser';
 import DataOfTheClasses from './DataOfTheClasses';
 import ProfessionList from './ProfessionList';
 import DataContext from '../../context/DataContext';
+import ListEducationalPrograms from './ListEducationalPrograms';
 
 
 function Admin() {
@@ -43,6 +44,7 @@ function Admin() {
 					<Route path='allUser' element={<ShowUser />} />
 					<Route path='dataOfTheClasses/*' element={<DataOfTheClasses />} />
 					<Route path='professionList/*' element={<ProfessionList />} />
+					<Route path='listEducationalPrograms/*' element={<ListEducationalPrograms />} />
 					<Route path='*' element={location.pathname != "/admin" && <h1>Admin *********</h1>} />
 				</Routes>
 			</div>
