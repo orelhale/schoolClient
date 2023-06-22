@@ -16,10 +16,10 @@ export default function ListEducationalPrograms() {
       axios.get(url)
          .then((data) => {
             let result = data.data.result.records
-
+            console.log("result = ",result);
             let listRows = result.map(item => {
-               let { _id, shemTochnit, statusTochnit, shemIrgun } = item
-               return { _id, shemTochnit, statusTochnit, shemIrgun, data: [] }
+               let { _id, shemTochnit, statusTochnit, shemIrgun,makorTochnit } = item
+               return { _id, shemTochnit, statusTochnit, shemIrgun,makorTochnit, data: [] }
             })
             setListPrograms(listRows)
          })
@@ -31,7 +31,8 @@ export default function ListEducationalPrograms() {
       }
    }, [listPrograms])
 
-   const styleAllColumns = { fontWeight: 750, alignItems: "left", backgroundColor: "#1976d2", color: "#FFF" };
+   const styleAllHeaders = { fontWeight: 750, alignItems: "left", backgroundColor: "#1976d2", color: "#FFF" };
+   const styleAllColumns = { fontWeight: 750};
    const styleAllRows = { paddingLeft: "15px" };
 
    const columns = [
@@ -59,18 +60,30 @@ export default function ListEducationalPrograms() {
          styleColumn: { minWidth: 140 },
          styleRow: { minWidth: 140 }
       },
+      {
+         id: 'makorTochnit',
+         label: 'מקור תוכנית',
+         styleColumn: { minWidth: 140 },
+         styleRow: { minWidth: 140 }
+      },
    ]
 
    return (
       <div className={styles.ListEducationalPrograms}>
+         <h1>:מאגר תוכניות חינוכיות מאת משרד החינוך</h1>
+         <br/>
+         <br/>
          {listPrograms[0] &&
             <GenericTable
                columns={columns}
                dataRows={listPrograms}
                styleAllColumns={styleAllColumns}
+               styleAllHeaders={styleAllHeaders}
                styleAllRows={styleAllRows}
             />}
-
+            <br />
+            <br />
+            <br />
          <GenericTableWithData rows={listPrograms} columns={columns} setRows={setListPrograms} />
       </div>
    )

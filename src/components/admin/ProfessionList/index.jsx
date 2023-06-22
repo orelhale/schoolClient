@@ -28,6 +28,7 @@ export default function ProfessionList() {
 
 
 	const styleContainerTable = { maxWidth: "100%", overflow: 'hidden' };
+	const styleAllHeaders = { fontWeight:800 };
 	const styleAllColumns = { fontWeight: 750 };
 
 	const columns = [
@@ -73,12 +74,13 @@ export default function ProfessionList() {
 		<div className={styles.ProfessionList}>
 			<SmallContainer containerStyle={{ m: 1, width: 450, minHeight: 500 }} paperStyle={{ "padding": '1rem' }}>
 				<div className={styles.addProfession}>
-					<input value={addProfession} onChange={(e) => setAddProfession(e.target.value)} />
+					<input className={styles.input} value={addProfession} onChange={(e) => setAddProfession(e.target.value)} />
 					<MyIcon_Add onClick={handleAdd}/>
 				</div>
 				<GenericTable
 					columns={columns}
 					dataRows={dataRows}
+					styleAllHeaders={styleAllHeaders}
 					styleContainerTable={styleContainerTable}
 					styleAllColumns={styleAllColumns}
 					icons={(row, value, index) => {

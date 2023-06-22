@@ -11,7 +11,7 @@ import MyIcon_Delete from '../myIcons/MyIcon_Delete';
 import { useEffect, useState } from 'react';
 
 
-function GenericTable({ columns, dataRows, styleAllColumns, icons, styleContainerTable, styleTable, styleAllRows, }) {
+function GenericTable({ columns, dataRows, styleAllColumns,styleAllHeaders, icons, styleContainerTable, styleTable, styleAllRows, }) {
 
    const [rows, setRows] = useState(dataRows);
 
@@ -29,7 +29,7 @@ function GenericTable({ columns, dataRows, styleAllColumns, icons, styleContaine
                   <TableHead>
                      <TableRow>
                         {columns.map((column) => {
-                           return <TableCell key={column.id} sx={column.styleColumn ? { ...column.styleColumn, ...styleAllColumns } : styleAllColumns}>{column.label != "icon" && column.label}</TableCell>
+                           return <TableCell key={column.id} sx={column.styleColumn ? { ...column.styleColumn, ...styleAllHeaders } : styleAllColumns}>{column.label != "icon" && column.label}</TableCell>
                         })}
                      </TableRow>
                   </TableHead>
@@ -37,7 +37,7 @@ function GenericTable({ columns, dataRows, styleAllColumns, icons, styleContaine
                      <TableBody>
                         {rows.map((row, index_row) => {
                            return (
-                              <TableRow hover role="checkbox" tabIndex={-1} key={index_row} >
+                              <TableRow hover role="checkbox" tabIndex={-1} key={index_row} sx={styleAllColumns} >
                                  {columns.map((column, index_column) => {
                                     const value = row[column.id];
                                     return (
