@@ -1,0 +1,17 @@
+.overview{
+   text-align: center;
+   display: flex;
+   flex-direction: column;
+   align-content: center;
+   justify-content: center;
+}
+
+.wrapAverageContainer{
+   width: 500px;
+}
+
+.wrapAverageContainer2{
+   display: flex;
+   justify-content: center;
+   margin-top: 40px;
+}

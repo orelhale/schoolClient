@@ -8,11 +8,6 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 
 import Toolbar from '@mui/material/Toolbar';
-import LogoutIcon from '@mui/icons-material/Logout';
-import RuleOutlinedIcon from '@mui/icons-material/RuleOutlined';
-
-
-import WysiwygIcon from '@mui/icons-material/Wysiwyg';
 import { useNavigate } from 'react-router-dom';
 
 import InputLabel from '@mui/material/InputLabel';
@@ -20,6 +15,14 @@ import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
 import axios from 'axios';
 import DataContext from '../../context/DataContext';
+
+// icon
+import RuleOutlinedIcon from '@mui/icons-material/RuleOutlined';
+import WysiwygIcon from '@mui/icons-material/Wysiwyg';
+import LogoutIcon from '@mui/icons-material/Logout';
+import DvrIcon from '@mui/icons-material/Dvr';
+import ListAltRoundedIcon from '@mui/icons-material/ListAltRounded';
+import LibraryBooksRoundedIcon from '@mui/icons-material/LibraryBooksRounded';
 
 // ****** #1# s  ******
 let getListClassFromServer = async (functionToDo) => {
@@ -118,6 +121,16 @@ let ListButtonOfTeacher = (props) => {
 							<WysiwygIcon color='primary' />
 						</ListItemIcon>
 						<ListItemText primary={"exams"} />
+					</ListItemButton>
+				</ListItem>
+
+
+				<ListItem key={"overview"} disablePadding onClick={() => { navigate("overview") }}>
+					<ListItemButton>
+						<ListItemIcon>
+							<ListAltRoundedIcon color='primary' />
+						</ListItemIcon>
+						<ListItemText primary={"overview"} />
 					</ListItemButton>
 				</ListItem>
 			</>}

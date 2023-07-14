@@ -16,6 +16,7 @@ export default function CreateExam() {
     let { classId, userData } = useContext(DataContext)
 
     let [listStudents, setListStudents] = useState(null)
+    let [listStudentsWithId, setListStudentsWithId] = useState(null)
     let [nameOfExsam, setNameOfExsam] = useState("")
     let [scoreList, setScoreList] = useState(null)
     let [valueOfDate, setValueOfDate] = useState();
@@ -31,12 +32,17 @@ export default function CreateExam() {
 
 
     useEffect(() => {
-        axios.post("http://localhost:4000/users/GetListOfStudentsInSpecificClasses", { nameOfClass: nameOfThisClass })
+        axios.post("http://localhost:4000/users/GetListOfStudentsInSpecificClassesWithId", { nameOfClass: nameOfThisClass })
             .then((data) => {
-                let dataFromServer = data.data
+                let ServerData = data.data
+                console.log("ServerData ==== ",ServerData);
+                setListStudentsWithId(ServerData)
+
+                let dataFromServer = ServerData.map(stu => stu.nameStudent)
+                console.log("dataFromServer ==== ",dataFromServer);
+
                 console.log('nameOfThisClass || editspecificExam');
                 setValueOfDate(editDate())
-
                 let arr = []
                 for (const item in dataFromServer) {
                     arr.push("")
@@ -53,10 +59,11 @@ export default function CreateExam() {
 
         let dataForDatabase = []
         let averageCount = 0
-        listStudents.forEach((nameStudent, i_indexScore) => {
+        listStudentsWithId.forEach(({nameStudent, _id}, i_indexScore) => {
             let score = parseInt(scoreList[i_indexScore])
             averageCount += score ? score : 0;
-            dataForDatabase.push({ nameStudent: nameStudent, score: scoreList[i_indexScore] })
+            dataForDatabase.push({ nameStudent: nameStudent,id: _id, score: scoreList[i_indexScore] })
+            // dataForDatabase.push({ nameStudent: nameStudent,id: _id, score: Number(scoreList[i_indexScore]) })
         });
 
         let reversValueOfDate = valueOfDate.split("").reverse().join("")

@@ -9,6 +9,7 @@ import ShowAllExams from './showAllExams/ShowAllExams';
 import CreateExam from './createExam/CreateExam';
 import EditExam from '../../pages/EditExam';
 import DataContext from '../../context/DataContext';
+import Overview from './Overview';
 
 
 function Teacher() {
@@ -57,6 +58,7 @@ function Teacher() {
 					<Route path='showAllExams' element={<ShowAllExams />} />
 					<Route path='createExam' element={<CreateExam />} />
 					<Route path='editExam' element={<EditExam />} />
+					<Route path='overview' element={<Overview />} />
 				</Routes>
 			</div>
 		}

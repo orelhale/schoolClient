@@ -47,6 +47,7 @@ function ShowAllExams() {
 			funcApi_GET2_Exams(
 				dataToServer,
 				(dataFromServer) => {
+					console.log("dataFromServer == ",dataFromServer);
 					if (!dataFromServer[0])
 						return setNotData("You don't have any tests yet")
 					setAllExams(dataFromServer)
