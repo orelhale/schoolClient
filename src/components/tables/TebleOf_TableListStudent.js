@@ -14,7 +14,7 @@ import { Box } from '@mui/system';
 
 const columns = [
   { id: 'name', label: 'Name', minWidth: 100 },
-  { id: 'value', label: 'נוכחות', minWidth: 100 },
+  { id: 'value', label: 'attendance', minWidth: 100 },
   // { id: '22', label: 'בדיקה', minWidth: 100 },
   
 ];
@@ -72,7 +72,7 @@ export default function TebleOf_TableListStudent(props) {
         return arr2[0]
       })
       // console.log("arr = ",arr);
-      
+      console.log("arr ===================== ",arr);
       setRows(arr)
   
     }
