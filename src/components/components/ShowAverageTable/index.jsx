@@ -25,7 +25,7 @@ ChartJS.register(
 
 
 
-export default function ShowAverage({ labels = [], chartTitle = "title", datasets = [{ datasetsTitle: "", chartData: [] }] }) {
+export default function ShowAverageTable({ labels = [], chartTitle = "title", datasets = [{ datasetsTitle: "", chartData: [] }] }) {
 	let [data, setData] = useState(null)
 
 	const options = {
@@ -33,9 +33,10 @@ export default function ShowAverage({ labels = [], chartTitle = "title", dataset
 		plugins: {
 			legend: {
 				position: 'top',
+				display: true,
 			},
 			title: {
-				display: true,
+				display: false,
 				text: chartTitle,
 			},
 		},
@@ -55,7 +56,7 @@ export default function ShowAverage({ labels = [], chartTitle = "title", dataset
 
 
 	return (
-		<div className={styles.ShowAverage}>
+		<div className={styles.ShowAverageTable}>
 			{data &&
 				<Bar options={options} data={data} />
 			}

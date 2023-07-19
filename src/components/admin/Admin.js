@@ -8,6 +8,7 @@ import DataOfTheClasses from './DataOfTheClasses';
 import ProfessionList from './ProfessionList';
 import DataContext from '../../context/DataContext';
 import ListEducationalPrograms from './ListEducationalPrograms';
+import apiFunction from '../../functions/apiFunction';
 
 
 function Admin() {

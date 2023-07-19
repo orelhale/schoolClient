@@ -1,0 +1,25 @@
+
+.PopupTemplate{
+   width: 100%;
+   position: fixed;
+   height: 100vh;
+   background-color: rgb(255, 255, 255, 0.5);
+   z-index: 2;
+   top: 0;
+   right: 0;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+} 
+
+.wropPopup{
+   position: fixed;
+   /* min-width: 250px;
+   min-height: 350px; */
+   z-index: 3;
+   padding: 40px 20px;
+   background:white;
+
+   border: 1px black solid;
+   border-radius: 20px;
+}

@@ -1,0 +1,31 @@
+
+.flex_dir_row {
+   display: flex;
+   flex-direction: row;
+}
+
+.flex_dir_row_wrap {
+   display: flex;
+   flex-flow: row wrap;
+}
+
+.flex_dir_column {
+   display: flex;
+   flex-direction: column;
+}
+
+.flex_jcCenter {
+   justify-content: center;
+   align-items: center;
+}
+.flex_jcSpaceA {
+   justify-content: space-around;
+   align-items: center;
+}
+.flex_jcSpaceB {
+   justify-content: space-between;
+   align-items: center;
+}
+.flex_gap{
+   gap: 5px;
+}

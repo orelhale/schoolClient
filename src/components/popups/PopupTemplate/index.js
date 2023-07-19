@@ -1,15 +1,17 @@
 
+import { useContext } from "react"
+import styles from "./style.module.css"
+import DataContext from "../../../context/DataContext"
 
-function PopupTemplate({ styleBox = { m: 1, width: 350, height: 500 }, stylePaper = { padding: "30px" }, type = 3, body }) {
+export default function PopupTemplate({ content }) {
 
+   let { setPopupBody } = useContext(DataContext)
 
    return (
-      <div className="wrapEditUser">
-         <Box sx={{ display: 'flex', flexWrap: 'wrap', '& > :not(style)': styleBox }}>
-            <Paper elevation={type} sx={stylePaper}>{body}</Paper>
-         </Box>
+      <div className={styles.PopupTemplate} onClick={() => setPopupBody(null)}>
+         <div className={styles.wropPopup} onClick={(e) => e.stopPropagation()}>
+            {content && content.element}
+         </div>
       </div>
    )
 }
-
-export default PopupTemplate;

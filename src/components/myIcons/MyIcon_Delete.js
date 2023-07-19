@@ -3,10 +3,10 @@ import { IconButton } from "@mui/material"
 
 
 // אייקון פח אשפה
-let MyIcon_Delete = ({ onClick }) => {
+let MyIcon_Delete = ({ onClick , style={} , color}) => {
 	return (
-		<IconButton sx={{ height: "2rem", width: "2rem", padding: "0rem" }} onClick={onClick}>
-			<DeleteIcon sx={{ fontSize: "2rem" }} color="error" />
+		<IconButton sx={{ height: "2rem", width: "2rem", padding: "0rem", ...style }} onClick={onClick}>
+			<DeleteIcon sx={{ fontSize: "2rem" }} color={color || "error"} />
 		</IconButton>
 	)
 }

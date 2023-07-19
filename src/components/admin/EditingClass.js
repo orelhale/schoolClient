@@ -1,14 +1,16 @@
 
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import { Avatar, Button, TextField } from '@mui/material';
+import { Avatar, Button, IconButton, TextField } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
 import TebleOf_AddingClassOrEditingClass from '../tables/TebleOf_AddingClassOrEditingClass';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import DataContext from '../../context/DataContext';
-
+import GenericTable from '../tables/GenericTable';
+import DeleteIcon from '@mui/icons-material/Delete';
+import CreateIcon from '@mui/icons-material/Create';
 
 export default function EditingClass(props) {
     let { userData } = useContext(DataContext)
@@ -21,6 +23,10 @@ export default function EditingClass(props) {
 
     let [errorMessage, setErrorMessage] = useState("")
     let navigate = useNavigate()
+    let [dataToServer, setDataToServer] = useState(null)
+    let [columns, setColumns] = useState([])
+    const styleAllHeaders = { fontWeight: 750, alignItems: "left", backgroundColor: "#1976d2", color: "#FFF" };
+    let [editStudent, setEditStudent] = useState(-1)
 
     // useEffect(()=>{
     //     return ()=>{
@@ -28,6 +34,43 @@ export default function EditingClass(props) {
     //     }
     // },[])
 
+    let [inputList, setInputList] = useState([
+        { name: "nameStudent", placeholder: "First name", type: "text", style: {} },
+        { name: "family", placeholder: "Last name", type: "text", style: {} },
+        // {name:"fatherName", placeholder:"Father name", type:"text",style:{}},
+        // {name:"motherName", placeholder:"Mother name", type:"text",style:{}},
+        { name: "haddress", placeholder: "Haddress", type: "text", style: {} },
+        { name: "identify", placeholder: "identify", type: "number", style: {} },
+        { name: "phone", placeholder: "Phone", type: "text", style: {}, pattern: "[0-9]{1,10}" },
+    ])
+
+
+    
+    useEffect(() => {
+        initValueFromInput()
+        let listCloumn = inputList.map(({ name, placeholder }) => ({
+            id: name,
+            label: placeholder,
+            styleColumn: { minWidth: 140 },
+            styleRow: { minWidth: 140 }
+        }))
+
+        listCloumn.push({
+            id: '_id',
+            label: 'icon',
+            styleColumn: { minWidth: 10 },
+            styleRow: { minWidth: 10, padding: "16px 5px" }
+        })
+        listCloumn.splice(0, 0, {
+            id: '#',
+            label: '#',
+            styleColumn: { minWidth: 10, padding: "16px" },
+            styleRow: { minWidth: 10, padding: "16px" }
+        })
+
+        setColumns(listCloumn)
+
+    }, [])
 
     useEffect(() => {
         if (props.classToEdit) {
@@ -40,6 +83,22 @@ export default function EditingClass(props) {
     }, [props.classToEdit])
 
 
+
+
+    function initValueFromInput() {
+        let obj = {}
+        inputList.forEach(({ name }) => obj[name] = "");
+        setDataToServer(obj)
+    }
+
+
+    function funcRemoveItem(index) {
+        let copyArr = [...studentsList]
+        copyArr.splice(index, 1)
+        setStudentsList(copyArr)
+    }
+
+ 
     // TODO ****
     // formContentOfEditingClass להכניס את העיצוב הזה לתוך קובץ עיצוב ושם העיצוב יהיה 
     let styleCenter = {
@@ -47,6 +106,12 @@ export default function EditingClass(props) {
         "justifyContent": 'center',
         "flexDirection": "column",
         "alignItems": "center",
+    }
+
+    function setEditStudentFunc({ data, index }) {
+        console.log("obj == ", data);
+        setEditStudent(index)
+        setDataToServer(data)
     }
 
     let funcAddStudent = () => {
@@ -87,6 +152,7 @@ export default function EditingClass(props) {
             nameOfSchool: userData.nameSchool,
             _id: props.classToEdit._id
         }
+        console.log("dataToServer == ", dataToServer);
         console.log("dataToServer = ", dataToServer);
         axios.put("http://localhost:4000/admin/editClass", dataToServer)
             .then(
@@ -111,11 +177,13 @@ export default function EditingClass(props) {
                 }
             )
     }
-
+    function setValueFromInput(event) {
+        setDataToServer(e => ({ ...e, [event.target.name]: event.target.value }))
+    }
 
     return (
         <>
-            <Box
+            {/* <Box
                 sx={{
                     display: 'flex',
                     flexWrap: 'wrap',
@@ -127,35 +195,53 @@ export default function EditingClass(props) {
                     },
                 }}
             >
-                <Paper elevation={3}>
-                    <form onSubmit={(e) => { e.preventDefault(); funcAddStudent() }}>
-                        <div style={styleCenter}>
-
-                            <br />
-                            <div className='myStyleOfAlineItems2'>
-                                <TextField required id="standard-basic" label="Class name" variant="standard" sx={{ width: "6rem" }} value={nameOfClass} onChange={(e) => { setNameOfClass(e.target.value) }} />
-                            </div>
-                            <br />
-                            <TebleOf_AddingClassOrEditingClass studentsList={studentsList} setStudentsList={setStudentsList} />
-                            <br />
-                            <br />
-                            <br />
-                            <div className='myStyleOfAlineItems1'>
-                                <TextField required type={"text"} label="Name student" variant="outlined" sx={{ width: "8rem" }} value={nameOfStudent} onChange={(e) => { setNameOfStudent(e.target.value) }} />
-                                <TextField required type={"number"} label="Identify" variant="outlined" sx={{ width: "8rem" }} value={identifyOfStudent} onChange={(e) => { setIdentifyOfStudent(e.target.value) }} />
-                                <Button variant="outlined" type='submit' sx={{ borderRadius: "100%", padding: "0", height: "3rem", minWidth: "3rem" }}> <PersonAddAlt1Icon /></Button>
-                            </div>
-                            <br />
-                            <div style={{ width: "80%" }}>
-                                {errorMessage && <div className="errorMasage2">{errorMessage && <span className="_errorMasage2">* </span>}{errorMessage}</div>}
-                            </div>
-                            <br />
-                            <Button variant="outlined" onClick={sendDataToServer}>save</Button>
-                            <br />
-                        </div>
-                    </form>
-                </Paper>
-            </Box>
+                <Paper elevation={3}> */}
+            <form onSubmit={(e) => { e.preventDefault(); funcAddStudent() }}>
+                <div style={styleCenter}>
+                    {dataToServer &&
+                        <div style={{ display: "flex", flexDirection: "row" }}>
+                        {inputList.map(({ name, placeholder, type, style, pattern }) => <input pattern={pattern} required type={type} name={name} placeholder={placeholder} value={dataToServer[name]} onChange={setValueFromInput} style={style} />)}
+                    </div>
+                    }
+                    <br />
+                    <div className='myStyleOfAlineItems2'>
+                        <TextField required id="standard-basic" label="Class name" variant="standard" sx={{ width: "6rem" }} value={nameOfClass} onChange={(e) => { setNameOfClass(e.target.value) }} />
+                    </div>
+                    <br />
+                    <GenericTable
+                        columns={columns}
+                        dataRows={studentsList}
+                        styleAllHeaders={styleAllHeaders}
+                        icons={(row, value, index) => {
+                            return <>
+                                <IconButton onClick={() => { funcRemoveItem(index) }}><DeleteIcon color="error" /></IconButton>
+                                {/* <MyIcon_Edit2 onClick={() => { handleEdit(row._id, index) }} /> */}
+                                {/* <span style={{ marginRight: "20px" }} /> */}
+                                <IconButton type='button' onClick={() => { setEditStudentFunc({ data: row, index: index }) }}><CreateIcon /></IconButton>
+                                {/* <MyIcon_Delete onClick={() => { handleDelete(row._id, index) }} /> */}
+                            </>
+                        }}
+                    />
+                    {/* <TebleOf_AddingClassOrEditingClass studentsList={studentsList} setStudentsList={setStudentsList} /> */}
+                    {/* <br />
+                    <br />
+                    <br />
+                     <div className='myStyleOfAlineItems1'>
+                        <TextField required type={"text"} label="Name student" variant="outlined" sx={{ width: "8rem" }} value={nameOfStudent} onChange={(e) => { setNameOfStudent(e.target.value) }} />
+                        <TextField required type={"number"} label="Identify" variant="outlined" sx={{ width: "8rem" }} value={identifyOfStudent} onChange={(e) => { setIdentifyOfStudent(e.target.value) }} />
+                        <Button variant="outlined" type='submit' sx={{ borderRadius: "100%", padding: "0", height: "3rem", minWidth: "3rem" }}> <PersonAddAlt1Icon /></Button>
+                    </div> */}
+                    <br />
+                    <div style={{ width: "80%" }}>
+                        {errorMessage && <div className="errorMasage2">{errorMessage && <span className="_errorMasage2">* </span>}{errorMessage}</div>}
+                    </div>
+                    <br />
+                    <Button variant="outlined" onClick={sendDataToServer}>save</Button>
+                    <br />
+                </div>
+            </form>
+            {/* </Paper>
+            </Box> */}
         </>
     );
 }

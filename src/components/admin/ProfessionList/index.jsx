@@ -9,6 +9,7 @@ import { IconButton } from "@mui/material";
 import MyIcon_Edit2 from "../../../components/myIcons/MyIcon_Edit2";
 import MyIcon_Delete from "../../../components/myIcons/MyIcon_Delete";
 import MyIcon_Add from "../../myIcons/MyIcon_Add";
+import MyIcon_Edit from "../../myIcons/MyIcon_Edit";
 
 
 export default function ProfessionList() {
@@ -34,7 +35,7 @@ export default function ProfessionList() {
 	const columns = [
 		{
 			id: 'name',
-			label: 'Name',
+			label: 'Profession',
 			styleColumn: { minWidth: 140 },
 			styleRow: { minWidth: 140 }
 		},
@@ -74,19 +75,21 @@ export default function ProfessionList() {
 		<div className={styles.ProfessionList}>
 			<SmallContainer containerStyle={{ m: 1, width: 450, minHeight: 500 }} paperStyle={{ "padding": '1rem' }}>
 				<div className={styles.addProfession}>
-					<input className={styles.input} value={addProfession} onChange={(e) => setAddProfession(e.target.value)} />
+					<input placeholder="Profession" className={styles.input} value={addProfession} onChange={(e) => setAddProfession(e.target.value)} />
 					<MyIcon_Add onClick={handleAdd}/>
 				</div>
 				<GenericTable
+					defultStyleHeaders={true}
+					defultStyleColumns={true}
 					columns={columns}
 					dataRows={dataRows}
-					styleAllHeaders={styleAllHeaders}
+					// styleAllHeaders={styleAllHeaders}
 					styleContainerTable={styleContainerTable}
-					styleAllColumns={styleAllColumns}
+					// styleAllColumns={styleAllColumns}
 					icons={(row, value, index) => {
 						return <span style={{ display: "flex" }}>
-							<MyIcon_Edit2 onClick={() => { handleEdit(row._id, index) }} />
-							<span style={{ marginRight: "20px" }} />
+							<MyIcon_Edit onClick={() => { handleEdit(row._id, index) }} />
+							<span style={{ marginRight: "10px" }} />
 							<MyIcon_Delete onClick={() => { handleDelete(row._id, index) }} />
 						</span>
 					}}

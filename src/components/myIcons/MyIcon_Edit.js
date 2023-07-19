@@ -1,23 +1,16 @@
-import { Avatar, IconButton, TableCell } from "@mui/material"
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Avatar, IconButton } from "@mui/material"
 import EditIcon from '@mui/icons-material/Edit';
-import { Box } from "@mui/system";
 
 
 // אייקון עפרון
-let MyIcon_Edit = ({ onClick }) => {
+export default function MyIcon_Edit({ onClick, style = {}, color }) {
     return (
 
-        <Avatar sx={{ height: "2rem", width: "2rem", backgroundColor: "#912eff", color: "#fff" }}>
-            <EditIcon onClick={onClick} />
-        </Avatar>
+        // <Avatar sx={{ height: "2rem", width: "2rem", backgroundColor: "#912eff", color: "#fff" }}>
+        //     <EditIcon onClick={onClick} />
+        // </Avatar>
+        <IconButton sx={{ height: "2rem", width: "2rem", ...style }} onClick={onClick && onClick} color={color}>
+            <EditIcon />
+        </IconButton>
     )
 }
-
-export default MyIcon_Edit
-
-{/* <TableCell sx={{display: "flex"}}>
-<Avatar sx={{height: "2.2rem", width: "2.2rem" , backgroundColor: "#912eff"}}>
-    <EditIcon onClick={()=>{onClick}}/>
-</Avatar>
-</TableCell> */}

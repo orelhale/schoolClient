@@ -53,6 +53,11 @@ let ListButtonOfTeacher = (props) => {
 			setListClasses(data);
 		})
 	}, [])
+	// useEffect(() => {
+	// 	if (classId) {
+	// 		console.log("classId == ",classId);
+	// 	}
+	// }, [classId])
 
 
 	// פונקצייה: מקבלת את כל נתוני הכיתות ומחזירה מערך שמכיל רק את השמות של הכיתות 
@@ -90,6 +95,7 @@ let ListButtonOfTeacher = (props) => {
 						</InputLabel >
 						<NativeSelect
 							onChange={(e) => {
+								console.log("e.target.value === ",e.target.value);
 								setClassId(e.target.value);
 								navigate("/teacher")
 							}}
@@ -110,7 +116,7 @@ let ListButtonOfTeacher = (props) => {
 						<ListItemIcon>
 							<RuleOutlinedIcon color='primary' />
 						</ListItemIcon>
-						<ListItemText primary={"list"} />
+						<ListItemText primary={"Attendance"} />
 					</ListItemButton>
 				</ListItem>
 
@@ -120,7 +126,7 @@ let ListButtonOfTeacher = (props) => {
 						<ListItemIcon>
 							<WysiwygIcon color='primary' />
 						</ListItemIcon>
-						<ListItemText primary={"exams"} />
+						<ListItemText primary={"Exam"} />
 					</ListItemButton>
 				</ListItem>
 
@@ -130,7 +136,7 @@ let ListButtonOfTeacher = (props) => {
 						<ListItemIcon>
 							<ListAltRoundedIcon color='primary' />
 						</ListItemIcon>
-						<ListItemText primary={"overview"} />
+						<ListItemText primary={"Overview"} />
 					</ListItemButton>
 				</ListItem>
 			</>}

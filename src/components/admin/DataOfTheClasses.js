@@ -7,6 +7,7 @@ import TebleOf_DataOfTheClasses from "../tables/TebleOf_DataOfTheClasses"
 import AddNewClass from "./AddNewClass"
 import EditingClass from "./EditingClass"
 import SmallContainer from "../SmallContainer"
+import apiFunction from "../../functions/apiFunction"
 
 
 
@@ -18,33 +19,66 @@ export default function DataOfTheClasses() {
 
     let sendSetClassToEdit = (data) => {
         setClassToEdit(data)
-        navigate("editClass");
     }
 
     useEffect(() => {
-        if (rows) {
-            console.log("rows in D= ", rows);
+        if (classToEdit) {
+            navigate("addNewClass");
         }
-    }, [rows])
+    }, [classToEdit])
 
+    // useEffect(() => {
+    //     if (rows) {
+    //         console.log("rows in D= ", rows);
+    //     }
+    // }, [rows])
+
+    function updateEditClass(dataToServer) {
+        console.log("dataToServer == ",dataToServer);
+        apiFunction("admin/editClass", "PUT", dataToServer)
+            .then(
+                (data) => {
+                    let dataFromServer = data;
+                    console.log("dataFromServer = ", dataFromServer);
+                    // צריך לעדכן ברשימת הכיתות את הכיתה שהתעדכנה
+                    dataFromServer.numberOfStudents = dataFromServer.listStudents.length
+                    setRows((e) => {
+                        let copyListClass = [...e];
+                        let index = copyListClass.findIndex(item => item._id == dataToServer._id);
+                        copyListClass.splice(index, 1, dataFromServer);
+
+                        // console.log("copyListClass = ", copyListClass);
+                        return copyListClass
+                    })
+                    navigate("./")
+                    if(classToEdit){
+                        setClassToEdit(null);
+                    }
+                },
+                (err) => {
+                    console.log("Err from server = ", err.response.data);
+                }
+            )
+    }
     return (
         <div className="DataOfTheClasses">
-            
-            <SmallContainer containerStyle={{ m: 1, width: 550, minHeight: 500 }} paperStyle={{ "padding": '1rem' }}>
-                <Routes>
-                    <Route path="/" element={
-                        <>
-                            <div style={{ width: "100%", "text-align": "center" }}>
-                                <Style_ButtonAdd text={"Add new class"} onClick={() => { navigate("addNewClass") }} />
-                            </div>
-                            <br />
-                            <TebleOf_DataOfTheClasses sendSetClassToEdit={sendSetClassToEdit} rows={rows} setRows={setRows} />
-                        </>
-                    }></Route>
-                    <Route path="/editClass" element={<EditingClass classToEdit={classToEdit} setClassToEdit={setClassToEdit} setRows={setRows} />} />
-                    <Route path='addNewClass' element={<AddNewClass classToEdit={classToEdit} setClassToEdit={setClassToEdit} setRows={setRows} />} />
-                </Routes>
-            </SmallContainer>
+
+            {/* <SmallContainer containerStyle={{ m: 1, width: 550, minHeight: 500 }} paperStyle={{ "padding": '1rem' }}> */}
+            <Routes>
+                <Route path="/" element={
+                    <>
+                        <div style={{ width: "100%", "text-align": "center" }}>
+                            <Style_ButtonAdd text={"Add new class"} onClick={() => { navigate("addNewClass") }} />
+                        </div>
+                        <br />
+                        <TebleOf_DataOfTheClasses sendSetClassToEdit={sendSetClassToEdit} rows={rows} setRows={setRows} />
+                    </>
+                }></Route>
+                {/* <Route path="/editClass" element={<EditingClass classToEdit={classToEdit} setClassToEdit={setClassToEdit} setRows={setRows} />} /> */}
+                <Route path="/editClass" element={<h1>editClass</h1>} />
+                <Route path='addNewClass' element={<AddNewClass updateEditClass={updateEditClass} classToEdit={classToEdit} setClassToEdit={setClassToEdit} setRows={setRows} />} />
+            </Routes>
+            {/* </SmallContainer> */}
         </div>
     )
 }

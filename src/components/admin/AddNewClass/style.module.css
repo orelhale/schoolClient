@@ -1,0 +1,38 @@
+.myStyleOfAlineItems1 {
+   display: flex;
+   justify-content: space-around;
+   width: 100%;
+   align-items: center;
+}
+
+.myStyleOfAlineItems2 {
+   display: flex;
+   justify-content: space-around;
+   width: 18rem;
+   align-items: center;
+}
+
+
+._errorMasage2 {
+   font-size: 1.5rem;
+   margin-right: 0.4rem;
+   height: 1.5rem;
+}
+
+.errorMasage2 {
+   font-size: 1rem;
+   color: red;
+   font-weight: 700;
+   height: 1.5rem;
+   display: flex;
+   align-items: center;
+   align-content: center;
+}
+
+
+
+.inputItem {
+   /* flex-basis: 20%; */
+   /* margin: 3px 0px; */
+   padding: 3px 5px;
+}

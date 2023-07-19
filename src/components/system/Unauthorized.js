@@ -37,10 +37,10 @@ function Unauthorized() {
 	return (
 		<>
 			{checksIfShowComponent &&
-				<StyleFor_RegisteredUsers
-					nameUser={userData.name}
-					logOut={logOut}
-					body={
+				// <StyleFor_RegisteredUsers
+				// 	nameUser={userData.name}
+				// 	logOut={logOut}
+				// 	body={
 						<div className='Unauthorized'>
 							<Routes>
 								<Route index element={<h1 style={{ "color": "red" }}>** You don't have access yet **</h1>} />
@@ -48,8 +48,8 @@ function Unauthorized() {
 							</Routes>
 						</div>
 					}
-				/>
-			}
+				{/* />
+			} */}
 		</>
 	);
 }

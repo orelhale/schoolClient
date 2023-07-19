@@ -11,18 +11,22 @@ import MyIcon_Edit from '../myIcons/MyIcon_Edit';
 import MyIcon_Delete from '../myIcons/MyIcon_Delete';
 import { display } from '@mui/system';
 import GenericTable from '../tables/GenericTable';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import WaitForServer from '../admin/WaitForServer';
+
+import MyIcon_Mail from '../myIcons/MyIcon_Mail';
+import DataContext from '../../context/DataContext';
 
 
 
 
-export default function TebleOf_ShowUser({ setUserToEdit }) {
+export default function TebleOf_ShowUser({ setUserToEdit,dateFromServer }) {
 
 	const [dataRows, setDataRows] = useState(null);
+	let { setPopupBody } = useContext(DataContext)
 
 	useEffect(() => {
+		setDataRows(dateFromServer)
 		axios.get("http://localhost:4000/admin/getAllUsers")
 			.then(data => {
 				let arr = data.data.map((item) => {
@@ -75,8 +79,8 @@ export default function TebleOf_ShowUser({ setUserToEdit }) {
 		{
 			id: '_id',
 			label: 'icon',
-			styleColumn: { minWidth: 10 },
-			styleRow: { minWidth: 10, padding: "16px 0px" }
+			styleColumn: { width: 50 },
+			styleRow: { width: 30, padding: "16px 16px" }
 		},
 	]
 
@@ -84,16 +88,21 @@ export default function TebleOf_ShowUser({ setUserToEdit }) {
 
 	return (<>
 		<GenericTable
+			defultStyleHeaders={true}
 			columns={columns}
 			dataRows={dataRows}
 			styleContainerTable={styleContainerTable}
 			styleAllColumns={styleAllColumns}
 			icons={(row, value) => {
-				return <span style={{ display: "flex" }}>
-					<MyIcon_Edit onClick={() => { setUserToEdit(row); console.log("row = ", row) }} />
-					<span style={{ marginRight: "20px" }} />
-					<MyIcon_Delete onClick={() => { console.log("id = ", value) }} />
-				</span>
+				return (
+					<span style={{ display: "flex" }}>
+						<MyIcon_Edit onClick={() => { setUserToEdit(row); console.log("row = ", row) }} />
+						<span style={{ marginRight: "10px" }} />
+						<MyIcon_Delete onClick={() => { console.log("id = ", value) }} />
+						<span style={{ marginRight: "10px" }} />
+						<MyIcon_Mail onClick={()=>{setPopupBody({element:<h1>orel</h1>})}}/>
+					</span>
+				)
 			}}
 		/>
 	</>);

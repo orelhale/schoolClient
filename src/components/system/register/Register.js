@@ -6,6 +6,7 @@ import axios from "axios";
 
 function PageRegister() {
     let [userName, setUserName] = useState("")
+    let [family, setFamily] = useState("")
     let [password, setPassword] = useState("") 
     let [errorMasage, setErrorMasage] = useState("") 
     let [userEmail, setUserEmail] = useState("")
@@ -15,7 +16,13 @@ function PageRegister() {
 
 
     function mySubmit() {
-        let data = {name: userName, password: password, nameSchool: nameOfSchool, email: userEmail}
+        let data = {
+            name: userName,
+            family: family,
+            password: password,
+            nameSchool: nameOfSchool,
+            email: userEmail
+        }
 
         axios.post("http://localhost:4000/system/register", data)
             .then(
@@ -38,7 +45,7 @@ function PageRegister() {
                 <div className="screen">
                     <div className="screen__content">
                         <h2 className="button h2__">register</h2>
-                        <form action="" className="from" onSubmit={(e)=>{
+                        <form action="" className="from2" onSubmit={(e)=>{
                             e.preventDefault()
                             mySubmit()
                         }}>
@@ -46,7 +53,11 @@ function PageRegister() {
 
                             <div className="login__field">
                                 <i className="login__icon fas fa-user"></i>
-                                <input required  onChange={(e)=>{setUserName(e.target.value)}} value={userName} type={"text"} className="login__input" placeholder="User name"/>
+                                <input required  onChange={(e)=>{setUserName(e.target.value)}} value={userName} type={"text"} className="login__input" placeholder="First name"/>
+                            </div>
+                            <div className="login__field">
+                                <i className="login__icon fas fa-user"></i>
+                                <input required  onChange={(e)=>{setFamily(e.target.value)}} value={family} type={"text"} className="login__input" placeholder="Last name"/>
                             </div>
                             <div  className="login__field">
                                 <i className="login__icon fas fa-lock"></i>

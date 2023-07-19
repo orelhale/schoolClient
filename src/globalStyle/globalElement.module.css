@@ -1,0 +1,25 @@
+:root {
+   --color-blue: rgb(25, 118, 210);
+}
+
+.button{
+   border: 1px solid var(--color-blue);
+   border-radius: 3px;
+   background-color: white;
+   color: var(--color-blue);
+   padding: 3px 5px;
+
+}
+
+.button:hover{
+   border: none;
+   color:  white;
+   border: 1px solid var(--color-blue);
+
+   background-color: var(--color-blue);
+   padding: 3px 5px;
+}
+
+.input{
+   padding: 3px 5px;
+}

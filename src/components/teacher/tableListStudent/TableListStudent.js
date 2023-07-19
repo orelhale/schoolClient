@@ -20,9 +20,10 @@ function TableListStudent(props) {
     let [saveData, setSaveData] = useState(null);
     let [dataTable, setDataTable] = useState(null);
 
-    let [listStudent , setListStudent] = useState([])
-    const [value, setValue] = useState(new Date());
-    const [dateAsMilliseconds , setDateAsMilliseconds] = useState(Date.now());
+    let [listStudent, setListStudent] = useState([])
+    let [valueOfDate, setValueOfDate] = useState(new Date());
+
+    const [dateAsMilliseconds, setDateAsMilliseconds] = useState(Date.now());
 
 
     let tableOptions = ["", "V", "X"]
@@ -30,13 +31,13 @@ function TableListStudent(props) {
 
 
     useEffect(() => {
-        console.log("nameOfThisClass == ",nameOfThisClass);
-        if (nameOfThisClass && value) {
+        console.log("nameOfThisClass == ", nameOfThisClass);
+        if (nameOfThisClass && valueOfDate) {
             // אחרי שמתעדכן התאריך - הפונציה גורמת שיוצגו הנתונים של אותו תאריך מיד
             console.log("name calss = ", nameOfThisClass);
             getListStudentOfClass(nameOfThisClass)
         }
-    }, [value, nameOfThisClass])
+    }, [valueOfDate, nameOfThisClass])
 
 
     useEffect(() => {
@@ -62,7 +63,7 @@ function TableListStudent(props) {
 
     const handleChange = (newValue) => {
         setDataTable(null)
-        setValue(newValue);
+        setValueOfDate(newValue);
     };
 
 
@@ -84,7 +85,7 @@ function TableListStudent(props) {
 
 
 
-    const checkIfHaveDataInSpecificDay = async (uId, cId, theyear,themonth, theday) => {
+    const checkIfHaveDataInSpecificDay = async (uId, cId, theyear, themonth, theday) => {
 
         // let objectToServer = {
         //     day: day,
@@ -110,31 +111,35 @@ function TableListStudent(props) {
     const getListStudentOfClass = (nameOfClass) => {
 
         setNameOfThisClass(nameOfClass)
-        
+        console.log("classId == ", classId);
         // axios.post("http://localhost:4000/users/GetListOfStudentsInSpecificClasses", { nameOfClass: nameOfClass })
-            apiFunction(`classes/${classId}`,"GET")
+        apiFunction(`classes/${classId}`, "GET")
             .then(async (data) => {
                 let obj = {}
                 // obj.listStudent = data.data
+                console.log("data == ", data);
+                if (!data) {
+                    return
+                }
                 setListStudent(data.listStudents)
                 obj.listStudent = data.listStudents.map(stu => stu.nameStudent)
 
                 console.log("data.data = ", data);
                 obj.list = ["attendance"]
-                
-                let date = new Date(value)
+
+                let date = new Date(valueOfDate)
                 let day = date.getDate() - 1
                 let month = date.getMonth()
                 let year = date.getFullYear()
-                
-                let dataFromServer = await checkIfHaveDataInSpecificDay(userData.id, classId, year,month,day)
+
+                let dataFromServer = await checkIfHaveDataInSpecificDay(userData.id, classId, year, month, day)
                 // let dataFromServer = await checkIfHaveDataInSpecificDay(nameOfClass)
-                
+
                 console.log("dataFromServer = ", dataFromServer);
                 // console.log("dataFromServer ==== ",dataFromServer);
                 let arr = []
 
-                if (dataFromServer == "") {
+                if (!dataFromServer || dataFromServer == "") {
                     for (let i = 0; i < obj.listStudent.length; i++) {
                         arr[i] = []
 
@@ -145,34 +150,37 @@ function TableListStudent(props) {
 
                 } else {
                     arr = []
-
-                    data.listStudents.forEach(({nameStudent, _id}, i) =>{
+                    console.log(typeof dataFromServer);
+                    console.log("data.listStudents 1 == ", data.listStudents);
+                    console.log("data.listStudents 1 == ", data.listStudents);
+                    data.listStudents.forEach(({ nameStudent, _id }, i) => {
                         // console.log("stu == ",nameStudent);
                         let sName = nameStudent
                         let attendance = dataFromServer.list.find(s => s.studentId == _id).attendance || ""
                         // console.log("_id == ",_id);
                         // console.log("dataFromServer == ",dataFromServer);
                         // console.log("attendance == ",attendance);
-                        arr[i] = [{attendance: attendance,nameStudent:sName}]
+                        // arr[i] = [{attendance: attendance,nameStudent:sName}]
+                        arr[i] = [attendance]
 
                     })
+                    console.log("arr ==== ", arr);
                 }
-                console.log("arr ==== ",arr);
                 setSaveData(arr)
                 setDataTable(obj)
             })
     }
 
-    const organizationOfInformation = ()=>{
+    const organizationOfInformation = () => {
 
     }
 
     const completed = () => {
-        console.log("dataTable == ",dataTable);
-        console.log("saveData == ",saveData);
-        console.log("listStudent == ",listStudent);
+        console.log("dataTable == ", dataTable);
+        console.log("saveData == ", saveData);
+        console.log("listStudent == ", listStudent);
         let attendanceList = []
-        listStudent.forEach(({_id}, i) => {
+        listStudent.forEach(({ _id }, i) => {
             attendanceList.push({ studentId: _id, [dataTable.list[0]]: saveData[i][0] })
         });
 
@@ -183,7 +191,7 @@ function TableListStudent(props) {
         //     day: new Date(value).getDate() - 1,
         // }
 
-        let date = new Date(value)
+        let date = new Date(valueOfDate)
         let day = date.getDate() - 1
         let month = date.getMonth()
         let year = date.getFullYear()
@@ -194,7 +202,7 @@ function TableListStudent(props) {
             classId: classId,
             professionId: "",
             year: year,
-            dailyDataList: [{day: day, list: attendanceList}],
+            dailyDataList: [{ day: day, list: attendanceList }],
             month: month
         }
 
@@ -236,7 +244,7 @@ function TableListStudent(props) {
                     <Paper elevation={3} sx={{ "padding": '1rem 0rem' }}>
                         <div className='containerTableListStudent myFlexColumnAlineCenter'>
 
-                            <DateComponent value={value} handleChange={handleChange} setValue={setValue} />
+                            <DateComponent value={valueOfDate} handleChange={handleChange} setValue={setValueOfDate} />
 
                             <br />
 

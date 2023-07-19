@@ -10,6 +10,8 @@ import CreateExam from './createExam/CreateExam';
 import EditExam from '../../pages/EditExam';
 import DataContext from '../../context/DataContext';
 import Overview from './Overview';
+import SpecificOverviewAttendance from './SpecificOverviewAttendance';
+import SpecificOverviewExam from './SpecificOverviewExam.js';
 
 
 function Teacher() {
@@ -25,7 +27,8 @@ function Teacher() {
 		if (!dataFromCheckToken) {
 			navigate("/login")
 		}
-		setClassId(dataFromCheckToken.class_permission[0] ? dataFromCheckToken.class_permission[0] : "-")
+		console.log("dataFromCheckToken== ");
+		setClassId(dataFromCheckToken.class_permission[0] ? dataFromCheckToken.class_permission[0] : "")
 		setUserData(dataFromCheckToken)
 	}
 
@@ -53,12 +56,13 @@ function Teacher() {
 		{checksIfShowComponent &&
 			<div className='Teacher'>
 				<Routes>
-					<Route index element={<h1>welcome <span style={{ color: "red" }}>{userData.name}</span></h1>} />
 					<Route path='tableListStudent' element={<TableListStudent />} />
 					<Route path='showAllExams' element={<ShowAllExams />} />
 					<Route path='createExam' element={<CreateExam />} />
 					<Route path='editExam' element={<EditExam />} />
-					<Route path='overview' element={<Overview />} />
+					<Route path='overview/*' element={<Overview />} />
+					<Route path='overview/specific/exam' element={<SpecificOverviewExam />} />
+					<Route path='overview/specific/attendance' element={<SpecificOverviewAttendance />} />
 				</Routes>
 			</div>
 		}

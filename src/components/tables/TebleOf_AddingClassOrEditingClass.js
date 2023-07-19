@@ -16,7 +16,7 @@ import { IconButton } from '@mui/material';
 // arr.splice(4, 1)
 
 export default function TebleOf_AddingClassOrEditingClass(props) {
-
+  let {editStudent,studentsList} = props
   const [rows, setRows] = React.useState([]);
 
   const columns = [
@@ -26,21 +26,21 @@ export default function TebleOf_AddingClassOrEditingClass(props) {
   ];
 
   let funcRemoveItem = (index)=>{
-    let copyArr = [...props.studentsList]
+    let copyArr = [...studentsList]
     copyArr.splice(index, 1)
     props.setStudentsList(copyArr)
   }
 
   React.useEffect(()=>{
-    if(props.studentsList){
-        let tempData = props.studentsList
+    if(studentsList){
+        let tempData = studentsList
         let arr = tempData.map((item, i)=>{
             return { index: `${i + 1}.`, name: item.nameStudent , identify: item.identify}
         })
 
         setRows(arr)
     }
-  },[props.studentsList])
+  },[studentsList])
 
 
 
@@ -50,7 +50,7 @@ export default function TebleOf_AddingClassOrEditingClass(props) {
   // sx={{fontWeight: 700}}
 
   return (
-    <Paper sx={{ "width": '90%', overflow: 'hidden' }}>
+    <Paper sx={{ "width": "100%", overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -64,6 +64,7 @@ export default function TebleOf_AddingClassOrEditingClass(props) {
           <TableBody>
             {rows
               .map((row, index_row) => {
+                {console.log("studentsList == ",studentsList);}
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
                     {columns.map((column) => {
@@ -77,6 +78,7 @@ export default function TebleOf_AddingClassOrEditingClass(props) {
                       );
                     })}
                      <TableCell key={index_row + "d"}> <IconButton onClick={()=>{funcRemoveItem(index_row)}}><DeleteIcon color="error" /></IconButton> </TableCell>
+                     <TableCell key={index_row + "d2"}> <button type='button' onClick={()=>{editStudent({data:studentsList.find(stu=>stu.identify == row.identify), index: studentsList.findIndex(stu=>stu.identify == row.identify)})}}>edit</button> </TableCell>
                   </TableRow>
                 );
               })}

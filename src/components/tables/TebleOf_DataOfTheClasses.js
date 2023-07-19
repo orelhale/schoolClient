@@ -22,6 +22,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 import { useNavigate } from 'react-router-dom';
+import MyIcon_Edit from '../myIcons/MyIcon_Edit';
+import MyIcon_Delete from '../myIcons/MyIcon_Delete';
 
 
 
@@ -29,7 +31,15 @@ function Row(props) {
 	const { row, funcEditClass, refreshStateAfterDaleteClass } = props;
 
 	const [open, setOpen] = useState(false);
-
+	let [inputList, setInputList] = useState([
+		{ name: "nameStudent", placeholder: "First name", type: "text", style: {} },
+		{ name: "family", placeholder: "Last name", type: "text", style: {} },
+		// {name:"fatherName", placeholder:"Father name", type:"text",style:{}},
+		// {name:"motherName", placeholder:"Mother name", type:"text",style:{}},
+		{ name: "haddress", placeholder: "Haddress", type: "text", style: {} },
+		{ name: "identify", placeholder: "identify", type: "number", style: {} },
+		{ name: "phone", placeholder: "Phone", type: "number", style: {} },
+	])
 
 	let deleteClassAndHisStudent = (classToDelete) => {
 		console.log("classToDelete = ", classToDelete);
@@ -63,14 +73,20 @@ function Row(props) {
 				{/* מחזיק את האייקונים- עריכה ומחיקה */}
 				<TableCell sx={{ display: "flex" }}>
 					{/* אייקון עפרון - עריכת כיתה */}
-					<Avatar sx={{ height: "2.2rem", width: "2.2rem", backgroundColor: "#912eff" }}>
+					{/* <Avatar sx={{ height: "2.2rem", width: "2.2rem", backgroundColor: "#912eff" }}>
 						<EditIcon onClick={() => { funcEditClass() }} />
-					</Avatar>
+					</Avatar> */}
 
+					<span style={{ display: "flex" }}>
+						{/* <MyIcon_Edit onClick={() => { handleEdit(row._id, index) }} /> */}
+						<MyIcon_Edit onClick={() => { funcEditClass() }} />
+						<span style={{ marginRight: "10px" }} />
+						<MyIcon_Delete onClick={() => { deleteClassAndHisStudent(row._id) }} />
+						{/* <IconButton sx={{ padding: "0rem" }} onClick={() => { deleteClassAndHisStudent(row._id) }}>
+							<DeleteIcon sx={{ fontSize: "2rem" }} color="error" />
+						</IconButton> */}
+					</span>
 					{/* אייקון פח אשפה - מוחק כיתה */}
-					<IconButton sx={{ padding: "0rem" }} onClick={() => { deleteClassAndHisStudent(row._id) }}>
-						<DeleteIcon sx={{ fontSize: "2rem" }} color="error" />
-					</IconButton>
 				</TableCell>
 				{/* תוכן השורות - עבור שמירת כיתות */}
 			</TableRow>
@@ -87,14 +103,20 @@ function Row(props) {
 							<Table size="small" aria-label="purchases">
 								<TableHead>
 									<TableRow>
-										<TableCell sx={{ fontWeight: 700 }}>Name</TableCell>
+										{inputList.map(({ placeholder }) => (
+											// <TableCell component="th" scope="row">{listStudentsRow[placeholder]}</TableCell>
+											<TableCell sx={{ fontWeight: 700 }}>{placeholder}</TableCell>
+										))}
+
 									</TableRow>
 								</TableHead>
 								<TableBody >
 
 									{row.listStudents.map((listStudentsRow) => (
 										<TableRow key={listStudentsRow.nameStudent}  >
-											<TableCell component="th" scope="row">{listStudentsRow.nameStudent}</TableCell>
+											{inputList.map(({ name }) => (
+												<TableCell component="th" scope="row">{listStudentsRow[name]}</TableCell>
+											))}
 										</TableRow>
 									))}
 								</TableBody>
@@ -114,6 +136,7 @@ function Row(props) {
 export default function TebleOf_DataOfTheClasses({ rows, setRows, sendSetClassToEdit }) {
 	// let [rows, setRows] = useState([])
 	let [doOneTime, setDoOneTime] = useState(false)
+	const styleAllHeaders = { fontWeight: 750, alignItems: "left", backgroundColor: "#1976d2", color: "#FFF" };
 
 	//  מביא את רשימת את כל הכיתות והתלמידים שלהם
 	//  rows ומכניס אותם לתוך  
@@ -126,7 +149,7 @@ export default function TebleOf_DataOfTheClasses({ rows, setRows, sendSetClassTo
 				.then(
 					(data) => {
 						let listOfAllClasses = data.data
-						// console.log("listOfAllClasses = ",listOfAllClasses);
+						console.log("listOfAllClasses = ", listOfAllClasses);
 						let arrToRows = listOfAllClasses.map((item, i) => {
 							item.numberOfStudents = item.listStudents.length;
 							return item
@@ -159,15 +182,15 @@ export default function TebleOf_DataOfTheClasses({ rows, setRows, sendSetClassTo
 
 
 	return (<>
-		{rows[0] &&
+		{
 			<TableContainer component={Paper}>
 				<Table aria-label="collapsible table" >
-					<TableHead>
+					<TableHead >
 						<TableRow>
-							<TableCell />
-							<TableCell>Class name</TableCell>
-							<TableCell >Number of students</TableCell>
-							<TableCell></TableCell>
+							<TableCell sx={styleAllHeaders} />
+							<TableCell sx={styleAllHeaders} >Class name</TableCell>
+							<TableCell sx={styleAllHeaders} >Number of students</TableCell>
+							<TableCell sx={styleAllHeaders} ></TableCell>
 						</TableRow>
 					</TableHead>
 					<TableBody>

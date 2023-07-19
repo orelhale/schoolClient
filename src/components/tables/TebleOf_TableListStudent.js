@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState, useEffect} from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -14,7 +14,7 @@ import { Box } from '@mui/system';
 
 const columns = [
   { id: 'name', label: 'Name', minWidth: 100 },
-  { id: 'value', label: 'attendance', minWidth: 100 },
+  { id: 'value', label: 'Attendance', minWidth: 100 },
   // { id: '22', label: 'בדיקה', minWidth: 100 },
   
 ];
@@ -24,8 +24,8 @@ function createData(name, value) {
 }
 
 export default function TebleOf_TableListStudent(props) {
-  // let [funcOnClick,setFuncOnClick] = React.useState([])
-  let [copySaveTheDataSelection,setCopySaveTheDataSelection] = React.useState(props.saveTheDataSelection)
+  // let [funcOnClick,setFuncOnClick] = useState([])
+  let [copySaveTheDataSelection,setCopySaveTheDataSelection] = useState(props.saveTheDataSelection)
   let styleIcon = {
         "display": "inline-block",
         "width": "1.5rem",
@@ -41,7 +41,7 @@ export default function TebleOf_TableListStudent(props) {
         return icon == "V" ? <DoneOutlinedIcon sx={styleIcon}/> : icon == "X" ? <CloseOutlinedIcon sx={styleIcon}/> : icon;
     }
 
-  // React.useEffect(()=>{
+  // useEffect(()=>{
   //   let copyToFuncOnClick = []
 
   //   props.dataTable.listStudent.map((item,i)=>{
@@ -59,7 +59,7 @@ export default function TebleOf_TableListStudent(props) {
   // },[props.saveTheDataSelection])
 
   
-  React.useEffect(()=>{
+  useEffect(()=>{
     if(props.saveData){
       let arr = props.dataTable.listStudent.map((item,i)=>{
         // console.log(props.saveData[i]);
@@ -80,9 +80,9 @@ export default function TebleOf_TableListStudent(props) {
 
 
 
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [rows, setRows] = React.useState([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rows, setRows] = useState([]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -101,7 +101,7 @@ export default function TebleOf_TableListStudent(props) {
           <TableHead>
             <TableRow>
               {columns.map((column) => (
-                <TableCell sx={{color: "red", fontWeight: 700, fontSize:"1.4rem"}}
+                <TableCell sx={{fontWeight: 700, fontSize:"1.4rem"}}
                 key={column.id}
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
@@ -119,8 +119,9 @@ export default function TebleOf_TableListStudent(props) {
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.code} >
                     {columns.map((column,i4) => {
+                      // {console.log(" =========== wrwer",props.dataTable)}
                       // let copySaveData = [...saveData]
-                      let value = row[column.id];
+                      let value = column.id == "name" ?  row[column.id]  : row[column.id];
                       if(i4 > 0){
                         value = props.saveData[i3][i4 - 1];
                         // console.log("saveData = ",props.saveData[i3][i4]);

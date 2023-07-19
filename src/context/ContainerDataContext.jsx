@@ -9,6 +9,8 @@ export default function ContainerDataContext({ children }) {
    let [classId, setClassId] = useState(null)
    let [userEdit, setUserEdit] = useState(null)
    let [classEdit, setClassEdit] = useState(null)
+   let [popupBody, setPopupBody] = useState(null)
+   let [studentOverview, setStudentOverview] = useState(null)
 
    let value = {
       examDate,
@@ -22,6 +24,12 @@ export default function ContainerDataContext({ children }) {
       setUserEdit,
       classEdit,
       setClassEdit,
+      
+      popupBody, 
+      setPopupBody,
+      
+      studentOverview, 
+      setStudentOverview, 
    }
 
    // let { examDate, setExamDate, classId, setClassId, setUserData, userData } = useContext(DataContext)

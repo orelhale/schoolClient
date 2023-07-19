@@ -1,4 +1,4 @@
-.overview{
+.overview {
    text-align: center;
    display: flex;
    flex-direction: column;
@@ -6,12 +6,123 @@
    justify-content: center;
 }
 
-.wrapAverageContainer{
+.wrapAverageContainer {
    width: 500px;
 }
 
-.wrapAverageContainer2{
+.wrapAverageContainer2 {
    display: flex;
    justify-content: center;
+   margin-top: 20px;
+   width: 100%;
+}
+
+.wrapButton {
+   /* width: 40px; */
+   display: flex;
+   justify-content: center;
+   margin-top: 20px;
+   gap: 10px;
+}
+
+.table {
+   border-collapse: collapse;
+   max-width: 400px;
    margin-top: 40px;
+}
+
+.td,
+.th {
+   border: 1px solid black;
+   padding: 4px;
+}
+
+.pieItem {
+   width: 70px;
+   height: 70px;
+   /* padding: 2px; */
+   /* box-sizing: border-box; */
+}
+
+.pieWrap {
+   display: flex;
+   width: 100%;
+   /* height: 100%; */
+   flex-direction: row-reverse;
+   /* gap: 50px; */
+   flex-wrap: wrap;
+   /* align-content: flex-start; */
+   min-width: 600px;
+   /* justify-content: center; */
+}
+
+.wrapPieItem {
+   display: flex;
+   flex-direction: row;
+   min-width: 200px;
+   justify-content: center;
+   justify-content: space-between;
+   align-items: center;
+   margin-top: 15px;
+   padding: 15px 20px;
+   border-radius: 25px;
+   /* box-sizing: border-box; */
+   /* background-color: rgba(175, 175, 175, 0.1); */
+
+
+   border: 1px solid #E9EBEF;
+}
+
+.wrapPieItem:hover {
+   /* border: 1px rgb(25, 118, 210) solid; */
+   /* background-color: rgba(175, 175, 175, 0.1); */
+
+   /* box-shadow: 12px 0px 43px 12px rgba(0,0,0,0.1); */
+   box-shadow: 0 12px 26px -5px rgba(98, 106, 124, 0.3), 0 2px 6px -1px rgba(67, 74, 91, 0.15);
+
+
+}
+
+.wrapPieItem2 {
+   display: flex;
+   justify-content: center;
+
+   width: 50%;
+}
+
+.aline {
+   text-align: center;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+.alineRow {
+   text-align: center;
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+}
+.titleColor{
+   width: 30px;
+   height: 16px;
+   display:inline-block;
+   border: 1px solid;
+}
+
+.wrapListTitle{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   gap: 40px;
+}
+.wrapListTitle2{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   gap: 10px;
+}
+
+.flex_gap_5{
+   display: flex;
+   gap: 5px;
 }

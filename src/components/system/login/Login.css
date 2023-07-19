@@ -93,6 +93,11 @@ body {
 	border-radius: 60px;
 }
 
+.from2 {
+	width: 320px;
+	padding: 30px 30px;
+	padding-top: 0rem;
+}
 .from {
 	width: 320px;
 	padding: 30px;
