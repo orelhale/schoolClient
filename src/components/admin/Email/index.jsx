@@ -2,8 +2,10 @@
 import { useRef, useState } from 'react';
 import styles from './style.module.css';
 import emailjs from '@emailjs/browser';
+import globalElement from '../../../globalStyle/globalElement.module.css';
+import boxElement from '../../../globalStyle/boxElement.module.css';
 
-function Email({afterSended, email ="", name=""}){
+function Email({ afterSended, email = "", name = "" }) {
 
   const form = useRef();
 
@@ -57,7 +59,10 @@ function Email({afterSended, email ="", name=""}){
           <input className={styles.input} placeholder='Subject' type="text" name="subject" />
 
           <textarea className={styles.textarea} rows={5} placeholder='Message' name="message" />
-          <button className={styles.button} type="submit" value="Send" >Send</button>
+          
+          <div className={boxElement.textAline_center}>
+            <button className={globalElement.button} type="submit" value="Send" >Send</button>
+          </div>
         </form>
 
       </div>

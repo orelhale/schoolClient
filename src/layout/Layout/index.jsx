@@ -23,6 +23,8 @@ export default function Layout() {
 
 			<ContainerMain
 				nameUser={userData && userData.name}
+				family={userData && userData.family}
+				role={userData && userData.level_permission}
 				logOut={() => { navigate("/login"); }}
 				listButtons={<Nav />}
 				showListButtons={!["/", "/login", "/registration"].includes(location.pathname)}

@@ -33,9 +33,11 @@ export default function CreateExam() {
 
 
 	useEffect(() => {
-		axios.post("http://localhost:4000/users/GetListOfStudentsInSpecificClassesWithId", { nameOfClass: nameOfThisClass })
+		// axios.post("http://localhost:4000/users/GetListOfStudentsInSpecificClassesWithId", { nameOfClass: nameOfThisClass })
+		apiFunction("users/GetListOfStudentsInSpecificClassesWithId","POST", { nameOfClass: nameOfThisClass })
 			.then((data) => {
-				let ServerData = data.data
+				// let ServerData = data.data
+				let ServerData = data
 				console.log("ServerData ==== ", ServerData);
 				setListStudentsWithId(ServerData)
 
@@ -90,7 +92,42 @@ export default function CreateExam() {
 		)
 
 	}
-
+	const styleContainerTable = { maxWidth: "100%", overflow: 'hidden' };
+	const styleAllColumns = { fontWeight: 750 };
+	//  [['name','Name'],['date','Date'],['average','Average'],]
+	const columns =
+	[
+		{
+			id: '#',
+			label: '#',
+			styleColumn: { minWidth: 10, padding: "16px" },
+			styleRow: { minWidth: 10, padding: "16px" }
+		},
+		{
+			id: 'name',
+			label: 'Name',
+			styleColumn: { minWidth: 140 },
+			styleRow: { minWidth: 140 }
+		},
+		{
+			id: 'average',
+			label: 'Average',
+			styleColumn: { minWidth: 140 },
+			styleRow: { minWidth: 140 }
+		},
+		{
+			id: 'date',
+			label: 'Date',
+			styleColumn: { minWidth: 140 },
+			styleRow: { minWidth: 140 }
+		},
+		{
+			id: '_id',
+			label: 'icon',
+			styleColumn: { width: 50 },
+			styleRow: { width: 30, padding: "16px 16px" }
+		},
+	]
 
 	return (
 		<div className="CreateExam font_CreateExam">
@@ -114,7 +151,24 @@ export default function CreateExam() {
 							<TextField required type="String" id="standard-basic" label="Name of exam" variant="outlined" sx={{ width: "9rem" }} value={nameOfExsam} onChange={(e) => { setNameOfExsam(e.target.value) }} />
 						</div>
 						<br></br>
-
+						{/* <GenericTable
+							defultStyleHeaders={true}
+							defultStyleColumns={true}
+							columns={columns}
+							dataRows={dateFromServer}
+							styleContainerTable={styleContainerTable}
+							icons={(row, value) => {
+								return (
+									<span style={{ display: "flex" }}>
+										<MyIcon_Edit onClick={() => { setUserEdit(row); console.log("row = ", row) }} />
+										<span style={{ marginRight: "10px" }} />
+										<MyIcon_Delete onClick={() => { console.log("id = ", value) }} />
+										<span style={{ marginRight: "10px" }} />
+										<MyIcon_Mail onClick={() => { setPopupBody({ element: <Email email={row.email} name={row.name} afterSended={() => setPopupBody(null)} /> }) }} />
+									</span>
+								)
+							}}
+						/> */}
 						<TebleOf_CreateExam TableContent={{ listStudents: listStudents, scoreList: scoreList }} setScoreList={setScoreList} />
 						<div><button hidden ref={myRef} type="submit">Completed</button></div>
 						<br />

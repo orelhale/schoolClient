@@ -11,6 +11,8 @@ import BallotRoundedIcon from '@mui/icons-material/BallotRounded';
 import AssignmentRoundedIcon from '@mui/icons-material/AssignmentRounded';
 import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
 import BadgeOutlinedIcon from '@mui/icons-material/BadgeOutlined';
+import DvrIcon from '@mui/icons-material/Dvr';
+import EventNoteIcon from '@mui/icons-material/EventNote';
 
 
 export default function ListButtonOfAdmin(){
@@ -51,7 +53,7 @@ export default function ListButtonOfAdmin(){
             <ListItem disablePadding>
             <ListItemButton onClick={()=>{navigate("listEducationalPrograms")}}>
                 <ListItemIcon>
-                    <BadgeOutlinedIcon color={"primary"} />
+                    <EventNoteIcon color={"primary"} />
                 </ListItemIcon>
             <ListItemText primary={"List educational programs"}/>
             </ListItemButton>

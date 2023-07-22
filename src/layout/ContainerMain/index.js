@@ -21,7 +21,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import { useState } from 'react';
 
 
-function ContainerMain({ window, nameUser = "", listButtons, logOut, showListButtons = true, children }) {
+function ContainerMain({ window, nameUser = "", family = "",role="", listButtons, logOut, showListButtons = true, children }) {
 
 	// const = props;
 	const [mobileOpen, setMobileOpen] = useState(false);
@@ -43,9 +43,9 @@ function ContainerMain({ window, nameUser = "", listButtons, logOut, showListBut
 	const drawer = (
 		<>
 			{/* החלק הכי עליון של המגרה */}
-			<Toolbar><ListItemIcon><Avatar>
-				<PersonIcon />
-			</Avatar></ListItemIcon>{nameUser}</Toolbar>
+			<Toolbar><ListItemIcon><Avatar><PersonIcon /></Avatar></ListItemIcon>
+				{nameUser} {family}
+			</Toolbar>
 
 			<Divider />{listButtons}<Divider />
 

@@ -87,7 +87,7 @@ export default function ListEducationalPrograms() {
 
    return (
       <div className={styles.ListEducationalPrograms}>
-         <h1>:רשימת תוכניות חינוכיות מאת משרד החינוך</h1>
+         <u className={styles.u}><h1 className={styles.title}>:רשימת תוכניות חינוכיות מאת משרד החינוך</h1></u>
          <br />
          <br />
          {/* {listPrograms[0] &&

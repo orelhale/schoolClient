@@ -3,7 +3,9 @@
    display: flex;
    flex-direction: row;
 }
-
+.textAline_center{
+   text-align: center;
+}
 .flex_dir_row_wrap {
    display: flex;
    flex-flow: row wrap;

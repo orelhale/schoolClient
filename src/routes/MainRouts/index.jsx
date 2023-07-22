@@ -21,6 +21,7 @@ export default function MainRouts() {
 	return (
 		<Routes>
 			<Route path='login' element={<PageLogin />} />
+
 			<Route path='registration' element={<PageRegister />} />
 
 			<Route path="teacher/*" element={<Teacher />} />

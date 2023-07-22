@@ -25,9 +25,9 @@ export default function TebleOf_ListExams({ AllExams, handleEditExam, setNotData
 		{ id: 'average', label: 'Average', minWidth: defaultMinWidth },
 	];
 
-
-	let style1 = { fontWeight: 700, "font-size": "1.4rem", "width": "15%" }
-	let style2 = { fontWeight: 700, "font-size": "1.4rem" }
+	let addToStyle = { fontWeight: 750, alignItems: "left", backgroundColor: "#1976d2", color: "#FFF" }
+	let style1 = { fontWeight: 700, "font-size": "1.4rem", "width": "8%" ,...addToStyle}
+	let style2 = { fontWeight: 700, "font-size": "1.4rem" ,...addToStyle}
 
 	const [rows, setRows] = useState([]);
 
@@ -48,14 +48,14 @@ export default function TebleOf_ListExams({ AllExams, handleEditExam, setNotData
 			<TableContainer sx={{ maxHeight: 440 }}>
 				<Table stickyHeader aria-label="sticky table">
 					<TableHead >
-						<TableRow>
+						<TableRow >
 							{columns.map((column) => (
 								<TableCell sx={column.id == "index" ? style1 : style2}
 									key={column.id}
 									align={column.align}
 									style={{ minWidth: column.minWidth }}
 								>
-									{column.label}
+									{column.label != "#" ?column.label : ""}
 								</TableCell>
 							))}
 
